@@ -1,9 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-// Initialize PrismaClient with debug logs to help troubleshoot connection issues
-const prisma = new PrismaClient({
-  log: ['query', 'info', 'warn', 'error'],
-});
+import prisma from '../services/prismaService';
 
 export interface CreateUserInput {
   first_name: string;
@@ -12,6 +7,15 @@ export interface CreateUserInput {
   password: string;
   phone?: string;
   role: string;
+}
+
+export interface UpdateUserInput {
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
+  role?: string;
 }
 
 export const UserModel = {
@@ -25,7 +29,7 @@ export const UserModel = {
       throw error;
     }
   },
-  
+
   findByEmail: async (email: string) => {
     try {
       return await prisma.user.findUnique({
@@ -36,7 +40,7 @@ export const UserModel = {
       throw error;
     }
   },
-  
+
   findById: async (id: number) => {
     try {
       return await prisma.user.findUnique({
@@ -47,12 +51,35 @@ export const UserModel = {
       throw error;
     }
   },
-  
+
   getAll: async () => {
     try {
       return await prisma.user.findMany();
     } catch (error) {
       console.error('Error getting all users:', error);
+      throw error;
+    }
+  },
+
+  update: async (id: number, userData: UpdateUserInput) => {
+    try {
+      return await prisma.user.update({
+        where: { id },
+        data: userData
+      });
+    } catch (error) {
+      console.error('Error updating user:', error);
+      throw error;
+    }
+  },
+
+  delete: async (id: number) => {
+    try {
+      return await prisma.user.delete({
+        where: { id }
+      });
+    } catch (error) {
+      console.error('Error deleting user:', error);
       throw error;
     }
   }

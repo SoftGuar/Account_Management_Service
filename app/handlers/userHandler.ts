@@ -1,10 +1,23 @@
 // app/handlers/userHandler.ts
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { UserService } from '../services/userService';
-import { CreateUserInput } from '../models/user.model';
+import { CreateUserInput, UpdateUserInput } from '../models/user.model';
 
 interface CreateUserRequest {
   Body: CreateUserInput;
+}
+
+interface UpdateUserRequest {
+  Params: { id: string };
+  Body: UpdateUserInput;
+}
+
+interface GetUserRequest {
+  Params: { id: string };
+}
+
+interface DeleteUserRequest {
+  Params: { id: string };
 }
 
 export const createUser = async (
@@ -20,16 +33,9 @@ export const createUser = async (
       data: newUser
     });
   } catch (error) {
-    if (error instanceof Error) {
-      return reply.code(400).send({
-        success: false,
-        message: error.message
-      });
-    }
-    
-    return reply.code(500).send({
+    return reply.code(400).send({
       success: false,
-      message: 'An unexpected error occurred'
+      message: error instanceof Error ? error.message : 'An unexpected error occurred'
     });
   }
 };
@@ -44,6 +50,76 @@ export const getUsers = async (
     return reply.code(200).send({
       success: true,
       data: users
+    });
+  } catch (error) {
+    return reply.code(500).send({
+      success: false,
+      message: 'An unexpected error occurred'
+    });
+  }
+};
+
+export const getUserById = async (
+  request: FastifyRequest<GetUserRequest>,
+  reply: FastifyReply
+) => {
+  try {
+    const { id } = request.params;
+    const user = await UserService.getUserById(Number(id));
+
+    if (!user) {
+      return reply.code(404).send({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    return reply.code(200).send({
+      success: true,
+      data: user
+    });
+  } catch (error) {
+    return reply.code(500).send({
+      success: false,
+      message: 'An unexpected error occurred'
+    });
+  }
+};
+
+export const updateUser = async (
+  request: FastifyRequest<UpdateUserRequest>,
+  reply: FastifyReply
+) => {
+  try {
+    const { id } = request.params;
+    const userData = request.body;
+    
+    const updatedUser = await UserService.updateUser(Number(id), userData);
+
+    return reply.code(200).send({
+      success: true,
+      data: updatedUser
+    });
+  } catch (error) {
+    return reply.code(400).send({
+      success: false,
+      message: error instanceof Error ? error.message : 'An unexpected error occurred'
+    });
+  }
+};
+
+export const deleteUser = async (
+  request: FastifyRequest<DeleteUserRequest>,
+  reply: FastifyReply
+) => {
+  try {
+    const { id } = request.params;
+    
+    await UserService.deleteUser(Number(id));
+
+    return reply.code(200).send({
+      success: true,
+      message: 'User deleted successfully'
     });
   } catch (error) {
     return reply.code(500).send({

@@ -2,9 +2,9 @@ import dotenv from 'dotenv';
 import Fastify from 'fastify';
 import registerMiddlewares from './middlewares';
 import registerRoutes from './routers';
-import { PrismaClient } from '@prisma/client';
+import { checkDatabaseConnection, disconnectPrisma } from './services/prismaService';
 
-// Load environment variables from .env
+// Load environment variables
 dotenv.config();
 
 // Ensure DATABASE_URL is available
@@ -14,20 +14,6 @@ if (!process.env.DATABASE_URL) {
 }
 
 const fastify = Fastify({ logger: true });
-
-// Initialize Prisma once at app startup
-const prisma = new PrismaClient();
-
-// Check database connection
-async function checkDatabaseConnection() {
-  try {
-    await prisma.$connect();
-    console.log('Database connection established');
-  } catch (error) {
-    console.error('Failed to connect to database:', error);
-    process.exit(1);
-  }
-}
 
 async function startServer() {
   // Check database connection first
@@ -54,7 +40,7 @@ async function startServer() {
 // Add graceful shutdown
 const gracefulShutdown = async () => {
   console.log('Shutting down gracefully');
-  await prisma.$disconnect();
+  await disconnectPrisma();
   process.exit(0);
 };
 

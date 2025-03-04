@@ -1,5 +1,6 @@
 // app/services/userService.ts
-import { UserModel, CreateUserInput } from '../models/user.model';
+import { UserModel, CreateUserInput, UpdateUserInput } from '../models/user.model';
+import bcrypt from 'bcrypt';
 
 export const UserService = {
   createUser: async (userData: CreateUserInput) => {
@@ -9,21 +10,34 @@ export const UserService = {
     if (existingUser) {
       throw new Error('User with this email already exists');
     }
-    
-    // In a real application, you would hash the password before storing it
-    // const hashedPassword = await bcrypt.hash(userData.password, 10);
-    
+
+    // Hash password before storing it
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
+
     return UserModel.create({
       ...userData,
-      // password: hashedPassword
+      password: hashedPassword
     });
   },
-  
+
   getUserById: async (id: number) => {
     return UserModel.findById(id);
   },
-  
+
   getAllUsers: async () => {
     return UserModel.getAll();
+  },
+
+  updateUser: async (id: number, userData: UpdateUserInput) => {
+    // If updating password, hash it
+    if (userData.password) {
+      userData.password = await bcrypt.hash(userData.password, 10);
+    }
+
+    return UserModel.update(id, userData);
+  },
+
+  deleteUser: async (id: number) => {
+    return UserModel.delete(id);
   }
 };
