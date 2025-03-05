@@ -2,6 +2,7 @@ import adminRoutes from './admin.routes';
 import commercialRoutes from './commercial.routes';
 import deciderRoutes from './decider.routes';
 import exampleRoutes from './example.routes';
+import maintainerRoutes from './maintainer.routes';
 import userRoutes from './user.routes';
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
@@ -14,6 +15,8 @@ const registerRoutes = (fastify: FastifyInstance) => {
   fastify.register(adminRoutes, { prefix: '/admins' });
   fastify.register(commercialRoutes, { prefix: '/commercials' });
   fastify.register(deciderRoutes, { prefix: '/decider' });
+  fastify.register(maintainerRoutes, { prefix: '/maintainer' });
+
 
 
 };
