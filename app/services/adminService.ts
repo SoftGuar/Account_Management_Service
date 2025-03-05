@@ -1,4 +1,3 @@
-// app/services/adminService.ts
 import { AdminModel, CreateAdminInput, UpdateAdminInput } from '../models/admin.model';
 import bcrypt from 'bcrypt';
 

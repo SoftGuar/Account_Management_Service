@@ -1,4 +1,3 @@
-// app/services/commercialService.ts
 import { CommercialModel, CreateCommercialInput, UpdateCommercialInput } from '../models/commercial.model';
 import bcrypt from 'bcrypt';
 
