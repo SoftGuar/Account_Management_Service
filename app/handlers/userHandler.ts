@@ -3,25 +3,8 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import { UserService } from '../services/userService';
 import { CreateUserInput, UpdateUserInput } from '../models/user.model';
 
-interface CreateUserRequest {
-  Body: CreateUserInput;
-}
-
-interface UpdateUserRequest {
-  Params: { id: string };
-  Body: UpdateUserInput;
-}
-
-interface GetUserRequest {
-  Params: { id: string };
-}
-
-interface DeleteUserRequest {
-  Params: { id: string };
-}
-
 export const createUser = async (
-  request: FastifyRequest<CreateUserRequest>,
+  request: FastifyRequest<{ Body: CreateUserInput }>,
   reply: FastifyReply
 ) => {
   try {
@@ -60,7 +43,7 @@ export const getUsers = async (
 };
 
 export const getUserById = async (
-  request: FastifyRequest<GetUserRequest>,
+  request: FastifyRequest<{ Params: { id: string } }>,
   reply: FastifyReply
 ) => {
   try {
@@ -87,7 +70,7 @@ export const getUserById = async (
 };
 
 export const updateUser = async (
-  request: FastifyRequest<UpdateUserRequest>,
+  request: FastifyRequest<{ Params: { id: string }, Body: UpdateUserInput }>,
   reply: FastifyReply
 ) => {
   try {
@@ -109,7 +92,7 @@ export const updateUser = async (
 };
 
 export const deleteUser = async (
-  request: FastifyRequest<DeleteUserRequest>,
+  request: FastifyRequest<{ Params: { id: string } }>,
   reply: FastifyReply
 ) => {
   try {
