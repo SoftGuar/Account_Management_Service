@@ -1,4 +1,3 @@
-// app/handlers/userHandler.ts
 import { Type } from '@sinclair/typebox';
 
 
@@ -9,7 +8,6 @@ export const createUserSchema = {
     email: Type.String({ format: 'email' }),
     password: Type.String(),
     phone: Type.Optional(Type.String()),
-    role: Type.String()
   }),
   response: {
     201: Type.Object({
@@ -20,7 +18,6 @@ export const createUserSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
-        role: Type.String()
       })
     })
   }
@@ -38,7 +35,6 @@ export const getUsersSchema = {
           last_name: Type.String(),
           email: Type.String({ format: 'email' }),
           phone: Type.Optional(Type.String()),
-          role: Type.String()
         })
       )
     })
@@ -59,7 +55,6 @@ export const getUserByIdSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
-        role: Type.String()
       })
     }),
     404: Type.Object({
@@ -81,7 +76,6 @@ export const updateUserSchema = {
       email: Type.String({ format: 'email' }),
       password: Type.String(),
       phone: Type.Optional(Type.String()),
-      role: Type.String()
     })
   ),
   response: {
@@ -93,7 +87,6 @@ export const updateUserSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
-        role: Type.String()
       })
     })
   }

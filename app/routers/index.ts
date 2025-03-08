@@ -3,7 +3,7 @@ import commercialRoutes from './commercial.routes';
 import deciderRoutes from './decider.routes';
 import exampleRoutes from './example.routes';
 import maintainerRoutes from './maintainer.routes';
-import userRoutes from './user/routes';
+import userRoutes from './user/user.routes';
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
 const registerRoutes = (fastify: FastifyInstance) => {

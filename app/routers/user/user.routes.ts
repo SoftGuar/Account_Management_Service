@@ -1,7 +1,6 @@
-// app/routers/user.routes.ts
 import { FastifyInstance } from 'fastify';
 import { createUser, getUsers, getUserById, updateUser, deleteUser } from '../../handlers/userHandler';
-import { createUserSchema, deleteUserSchema , getUserByIdSchema, getUsersSchema, updateUserSchema } from './schema';
+import { createUserSchema, deleteUserSchema , getUserByIdSchema, getUsersSchema, updateUserSchema } from './user.schema';
 
 const userRoutes = async (fastify: FastifyInstance) => {
   // POST /users - Create a new user

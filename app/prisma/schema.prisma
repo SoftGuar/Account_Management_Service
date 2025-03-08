@@ -14,7 +14,6 @@ model Decider {
   email      String  @unique
   password   String
   phone      String?
-  role       String
 }
 
 model SuperAdmin {
@@ -24,7 +23,6 @@ model SuperAdmin {
   email      String  @unique
   password   String
   phone      String?
-  role       String
   admins     Admin[]
 }
 
@@ -35,7 +33,6 @@ model Admin {
   email      String   @unique
   password   String
   phone      String?
-  role       String
   add_by     Int
   superAdmin SuperAdmin @relation(fields: [add_by], references: [id], onDelete: Cascade)
 }
@@ -47,7 +44,6 @@ model Maintainer {
   email      String  @unique
   password   String
   phone      String?
-  role       String
 }
 
 model User {
@@ -57,7 +53,6 @@ model User {
   email      String  @unique
   password   String
   phone      String?
-  role       String
 }
 
 model Helper {
@@ -67,7 +62,6 @@ model Helper {
   email      String  @unique
   password   String
   phone      String?
-  role       String
 }
 
 model Commercial {
@@ -77,5 +71,4 @@ model Commercial {
   email      String  @unique
   password   String
   phone      String?
-  role       String
 }

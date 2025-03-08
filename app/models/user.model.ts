@@ -6,7 +6,6 @@ export interface CreateUserInput {
   email: string;
   password: string;
   phone?: string;
-  role: string;
 }
 
 export interface UpdateUserInput {
@@ -15,7 +14,6 @@ export interface UpdateUserInput {
   email?: string;
   password?: string;
   phone?: string;
-  role?: string;
 }
 
 export const UserModel = {
