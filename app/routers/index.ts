@@ -1,8 +1,8 @@
-import adminRoutes from './admin.routes';
-import commercialRoutes from './commercial.routes';
-import deciderRoutes from './decider.routes';
+import adminRoutes from './admin/admin.routes';
+import commercialRoutes from './commercial/commercial.routes';
+import deciderRoutes from './decider/decider.routes';
 import exampleRoutes from './example.routes';
-import maintainerRoutes from './maintainer.routes';
+import maintainerRoutes from './maintainer/maintainer.routes';
 import userRoutes from './user/user.routes';
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 

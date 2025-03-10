@@ -2,25 +2,8 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import { MaintainerService } from '../services/maintainerService';
 import { CreateMaintainerInput, UpdateMaintainerInput } from '../models/maintainer.model';
 
-interface CreateMaintainerRequest {
-  Body: CreateMaintainerInput;
-}
-
-interface UpdateMaintainerRequest {
-  Params: { id: string };
-  Body: UpdateMaintainerInput;
-}
-
-interface GetMaintainerRequest {
-  Params: { id: string };
-}
-
-interface DeleteMaintainerRequest {
-  Params: { id: string };
-}
-
 export const createMaintainer = async (
-  request: FastifyRequest<CreateMaintainerRequest>,
+  request: FastifyRequest<{ Body: CreateMaintainerInput }>,
   reply: FastifyReply
 ) => {
   try {
@@ -59,7 +42,7 @@ export const getMaintainers = async (
 };
 
 export const getMaintainerById = async (
-  request: FastifyRequest<GetMaintainerRequest>,
+  request: FastifyRequest<{ Params: { id: string } }>,
   reply: FastifyReply
 ) => {
   try {
@@ -86,7 +69,7 @@ export const getMaintainerById = async (
 };
 
 export const updateMaintainer = async (
-  request: FastifyRequest<UpdateMaintainerRequest>,
+  request: FastifyRequest<{ Params: { id: string }, Body: UpdateMaintainerInput }>,
   reply: FastifyReply
 ) => {
   try {
@@ -108,7 +91,7 @@ export const updateMaintainer = async (
 };
 
 export const deleteMaintainer = async (
-  request: FastifyRequest<DeleteMaintainerRequest>,
+  request: FastifyRequest<{ Params: { id: string } }>,
   reply: FastifyReply
 ) => {
   try {
