@@ -6,7 +6,6 @@ export interface CreateCommercialInput {
   email: string;
   password: string;
   phone?: string;
-  role: string;
 }
 
 export interface UpdateCommercialInput {
@@ -15,7 +14,6 @@ export interface UpdateCommercialInput {
   email?: string;
   password?: string;
   phone?: string;
-  role?: string;
 }
 
 export const CommercialModel = {

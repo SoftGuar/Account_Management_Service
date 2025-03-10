@@ -6,7 +6,6 @@ export interface CreateMaintainerInput {
   email: string;
   password: string;
   phone?: string;
-  role: string;
 }
 
 export interface UpdateMaintainerInput {
@@ -15,7 +14,6 @@ export interface UpdateMaintainerInput {
   email?: string;
   password?: string;
   phone?: string;
-  role?: string;
 }
 
 export const MaintainerModel = {

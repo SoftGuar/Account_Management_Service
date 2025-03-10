@@ -6,7 +6,6 @@ export interface CreateDeciderInput {
   email: string;
   password: string;
   phone?: string;
-  role: string;
 }
 
 export interface UpdateDeciderInput {
@@ -15,7 +14,6 @@ export interface UpdateDeciderInput {
   email?: string;
   password?: string;
   phone?: string;
-  role?: string;
 }
 
 export const DeciderModel = {

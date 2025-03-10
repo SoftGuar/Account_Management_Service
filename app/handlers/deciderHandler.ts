@@ -2,25 +2,8 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import { DeciderService } from '../services/deciderService';
 import { CreateDeciderInput, UpdateDeciderInput } from '../models/decider.model';
 
-interface CreateDeciderRequest {
-  Body: CreateDeciderInput;
-}
-
-interface UpdateDeciderRequest {
-  Params: { id: string };
-  Body: UpdateDeciderInput;
-}
-
-interface GetDeciderRequest {
-  Params: { id: string };
-}
-
-interface DeleteDeciderRequest {
-  Params: { id: string };
-}
-
 export const createDecider = async (
-  request: FastifyRequest<CreateDeciderRequest>,
+  request: FastifyRequest<{ Body: CreateDeciderInput }>,
   reply: FastifyReply
 ) => {
   try {
@@ -59,7 +42,7 @@ export const getDeciders = async (
 };
 
 export const getDeciderById = async (
-  request: FastifyRequest<GetDeciderRequest>,
+  request: FastifyRequest<{ Params: { id: string } }>,
   reply: FastifyReply
 ) => {
   try {
@@ -86,7 +69,7 @@ export const getDeciderById = async (
 };
 
 export const updateDecider = async (
-  request: FastifyRequest<UpdateDeciderRequest>,
+  request: FastifyRequest<{ Params: { id: string }, Body: UpdateDeciderInput }>,
   reply: FastifyReply
 ) => {
   try {
@@ -108,7 +91,7 @@ export const updateDecider = async (
 };
 
 export const deleteDecider = async (
-  request: FastifyRequest<DeleteDeciderRequest>,
+  request: FastifyRequest<{ Params: { id: string } }>,
   reply: FastifyReply
 ) => {
   try {

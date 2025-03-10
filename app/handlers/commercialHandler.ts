@@ -2,25 +2,8 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import { CommercialService } from '../services/commercialService';
 import { CreateCommercialInput, UpdateCommercialInput } from '../models/commercial.model';
 
-interface CreateCommercialRequest {
-  Body: CreateCommercialInput;
-}
-
-interface UpdateCommercialRequest {
-  Params: { id: string };
-  Body: UpdateCommercialInput;
-}
-
-interface GetCommercialRequest {
-  Params: { id: string };
-}
-
-interface DeleteCommercialRequest {
-  Params: { id: string };
-}
-
 export const createCommercial = async (
-  request: FastifyRequest<CreateCommercialRequest>,
+  request: FastifyRequest<{ Body: CreateCommercialInput }>,
   reply: FastifyReply
 ) => {
   try {
@@ -59,7 +42,7 @@ export const getCommercials = async (
 };
 
 export const getCommercialById = async (
-  request: FastifyRequest<GetCommercialRequest>,
+  request: FastifyRequest<{ Params: { id: string } }>,
   reply: FastifyReply
 ) => {
   try {
@@ -86,7 +69,7 @@ export const getCommercialById = async (
 };
 
 export const updateCommercial = async (
-  request: FastifyRequest<UpdateCommercialRequest>,
+  request: FastifyRequest<{ Params: { id: string }, Body: UpdateCommercialInput }>,
   reply: FastifyReply
 ) => {
   try {
@@ -108,7 +91,7 @@ export const updateCommercial = async (
 };
 
 export const deleteCommercial = async (
-  request: FastifyRequest<DeleteCommercialRequest>,
+  request: FastifyRequest<{ Params: { id: string } }>,
   reply: FastifyReply
 ) => {
   try {
