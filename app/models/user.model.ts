@@ -1,4 +1,7 @@
-import prisma from '../services/prismaService';
+// app/models/user.model.ts
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export interface CreateUserInput {
   first_name: string;
@@ -16,69 +19,181 @@ export interface UpdateUserInput {
   phone?: string;
 }
 
+export interface UserOutput {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone?: string | null; // Accepter null ou undefined
+  helpers?: {
+    id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone?: string | null; // Accepter null ou undefined
+  }[];
+}
+
 export const UserModel = {
-  create: async (userData: CreateUserInput) => {
-    try {
-      return await prisma.user.create({
-        data: userData
-      });
-    } catch (error) {
-      console.error('Error creating user:', error);
-      throw error;
-    }
+  async create(data: CreateUserInput): Promise<UserOutput> {
+    const user = await prisma.user.create({
+      data,
+      select: {
+        id: true,
+        first_name: true,
+        last_name: true,
+        email: true,
+        phone: true,
+      },
+    });
+    return user;
   },
 
-  findByEmail: async (email: string) => {
-    try {
-      return await prisma.user.findUnique({
-        where: { email }
-      });
-    } catch (error) {
-      console.error('Error finding user by email:', error);
-      throw error;
-    }
+  async findByEmail(email: string): Promise<UserOutput | null> {
+    return prisma.user.findUnique({
+      where: { email },
+      select: {
+        id: true,
+        first_name: true,
+        last_name: true,
+        email: true,
+        phone: true,
+      },
+    });
   },
 
-  findById: async (id: number) => {
-    try {
-      return await prisma.user.findUnique({
-        where: { id }
-      });
-    } catch (error) {
-      console.error('Error finding user by ID:', error);
-      throw error;
-    }
+  async findById(id: number): Promise<UserOutput | null> {
+    return prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        first_name: true,
+        last_name: true,
+        email: true,
+        phone: true,
+        helpers: {
+          select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            email: true,
+            phone: true,
+          },
+        },
+      },
+    });
   },
 
-  getAll: async () => {
-    try {
-      return await prisma.user.findMany();
-    } catch (error) {
-      console.error('Error getting all users:', error);
-      throw error;
-    }
+  async getAll(): Promise<UserOutput[]> {
+    return prisma.user.findMany({
+      select: {
+        id: true,
+        first_name: true,
+        last_name: true,
+        email: true,
+        phone: true,
+        helpers: {
+          select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            email: true,
+            phone: true,
+          },
+        },
+      },
+    });
   },
 
-  update: async (id: number, userData: UpdateUserInput) => {
-    try {
-      return await prisma.user.update({
-        where: { id },
-        data: userData
-      });
-    } catch (error) {
-      console.error('Error updating user:', error);
-      throw error;
-    }
+  async update(id: number, data: UpdateUserInput): Promise<UserOutput> {
+    return prisma.user.update({
+      where: { id },
+      data,
+      select: {
+        id: true,
+        first_name: true,
+        last_name: true,
+        email: true,
+        phone: true,
+      },
+    });
   },
 
-  delete: async (id: number) => {
-    try {
-      return await prisma.user.delete({
-        where: { id }
-      });
-    } catch (error) {
-      console.error('Error deleting user:', error);
-      throw error;
-    }
-  }
+  async delete(id: number): Promise<void> {
+    await prisma.user.delete({
+      where: { id },
+    });
+  },
+
+  // Fonctions pour gérer les helpers
+  async addHelper(userId: number, helperId: number): Promise<UserOutput> {
+    return prisma.user.update({
+      where: { id: userId },
+      data: {
+        helpers: {
+          connect: { id: helperId },
+        },
+      },
+      select: {
+        id: true,
+        first_name: true,
+        last_name: true,
+        email: true,
+        phone: true,
+        helpers: {
+          select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            email: true,
+            phone: true,
+          },
+        },
+      },
+    });
+  },
+
+  async removeHelper(userId: number, helperId: number): Promise<UserOutput> {
+    return prisma.user.update({
+      where: { id: userId },
+      data: {
+        helpers: {
+          disconnect: { id: helperId },
+        },
+      },
+      select: {
+        id: true,
+        first_name: true,
+        last_name: true,
+        email: true,
+        phone: true,
+        helpers: {
+          select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            email: true,
+            phone: true,
+          },
+        },
+      },
+    });
+  },
+
+  async getUserHelpers(userId: number) {
+    return prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        helpers: {
+          select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            email: true,
+            phone: true,
+          },
+        },
+      },
+    });
+  },
 };
