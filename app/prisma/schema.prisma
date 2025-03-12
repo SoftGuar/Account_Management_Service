@@ -53,6 +53,9 @@ model User {
   email      String  @unique
   password   String
   phone      String?
+  helpers    Helper[]  @relation("UserHelpers")
+
+
 }
 
 model Helper {
@@ -62,6 +65,7 @@ model Helper {
   email      String  @unique
   password   String
   phone      String?
+  users      User[]    @relation("UserHelpers")
 }
 
 model Commercial {
