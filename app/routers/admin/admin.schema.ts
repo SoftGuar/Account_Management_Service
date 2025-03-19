@@ -7,6 +7,7 @@ export const createAdminSchema = {
     email: Type.String({ format: 'email' }),
     password: Type.String(),
     phone: Type.Optional(Type.String()),
+    privilege : Type.Number(),
     add_by: Type.Number(), 
   }),
   response: {
@@ -18,6 +19,7 @@ export const createAdminSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        privilege : Type.Number(),
         add_by: Type.Number(),
       })
     })
@@ -35,6 +37,7 @@ export const getAdminsSchema = {
           last_name: Type.String(),
           email: Type.String({ format: 'email' }),
           phone: Type.Optional(Type.String()),
+          privilege : Type.Number(),
           add_by: Type.Number(),
         })
       )
@@ -55,6 +58,7 @@ export const getAdminByIdSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        privilege : Type.Number(),
         add_by: Type.Number(),
       })
     }),
@@ -76,6 +80,7 @@ export const updateAdminSchema = {
       email: Type.String({ format: 'email' }),
       password: Type.String(),
       phone: Type.Optional(Type.String()),
+      privilege : Type.Optional(Type.Number()),
     })
   ),
   response: {
@@ -87,6 +92,7 @@ export const updateAdminSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        privilege : Type.Number(),
         add_by: Type.Number(),
       })
     })

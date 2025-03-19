@@ -7,6 +7,7 @@ export interface CreateAdminInput {
   password: string;
   phone?: string;
   add_by: number;
+  privilege : number;
 }
 
 export interface UpdateAdminInput {
@@ -15,6 +16,7 @@ export interface UpdateAdminInput {
   email?: string;
   password?: string;
   phone?: string;
+  privilege : number;
   add_by?: number;
 }
 
