@@ -27,13 +27,14 @@ model SuperAdmin {
 }
 
 model Admin {
-  id         Int      @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   first_name String
   last_name  String
-  email      String   @unique
+  email      String     @unique
   password   String
   phone      String?
   add_by     Int
+  privilege  Int
   superAdmin SuperAdmin @relation(fields: [add_by], references: [id], onDelete: Cascade)
 }
 
@@ -47,15 +48,16 @@ model Maintainer {
 }
 
 model User {
-  id         Int     @id @default(autoincrement())
-  first_name String
-  last_name  String
-  email      String  @unique
-  password   String
-  phone      String?
-  helpers    Helper[]  @relation("UserHelpers")
-
-
+  id          Int           @id @default(autoincrement())
+  email       String        @unique
+  first_name  String
+  last_name   String
+  password    String
+  phone       String?
+  Dispositive Dispositive[]
+  Quotation   Quotation[]
+  Transaction Transaction[]
+  helpers     Helper[]      @relation("UserHelpers")
 }
 
 model Helper {
@@ -65,14 +67,77 @@ model Helper {
   email      String  @unique
   password   String
   phone      String?
-  users      User[]    @relation("UserHelpers")
+  users      User[]  @relation("UserHelpers")
 }
 
 model Commercial {
-  id         Int     @id @default(autoincrement())
-  first_name String
-  last_name  String
-  email      String  @unique
-  password   String
-  phone      String?
+  id          Int           @id @default(autoincrement())
+  first_name  String
+  last_name   String
+  email       String        @unique
+  password    String
+  phone       String?
+  Transaction Transaction[]
+}
+
+model Dispositive {
+  id                 Int                  @id @default(autoincrement())
+  type               String
+  start_date         DateTime
+  end_date           DateTime
+  initial_state      String
+  MAC                String
+  state              String
+  user_id            Int?
+  product_id         Int
+  Product            Product              @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  User               User?                @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  ProductTransaction ProductTransaction[]
+}
+
+model Product {
+  id               Int                @id @default(autoincrement())
+  name             String
+  description      String?
+  price            Float
+  Dispositive      Dispositive[]
+  ProductQuotation ProductQuotation[]
+}
+
+model ProductQuotation {
+  quotation_id Int
+  product_id   Int
+  count        Int
+  Product      Product   @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  Quotation    Quotation @relation(fields: [quotation_id], references: [id], onDelete: Cascade)
+
+  @@id([quotation_id, product_id])
+}
+
+model ProductTransaction {
+  id             Int         @id @default(autoincrement())
+  transaction_id Int
+  dispositive_id Int
+  isConfirmed    Boolean     @default(false)
+  Dispositive    Dispositive @relation(fields: [dispositive_id], references: [id])
+  Transaction    Transaction @relation(fields: [transaction_id], references: [id])
+}
+
+model Quotation {
+  id               Int                @id @default(autoincrement())
+  user_id          Int
+  date             DateTime
+  ProductQuotation ProductQuotation[]
+  User             User               @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model Transaction {
+  id                 Int                  @id @default(autoincrement())
+  user_id            Int
+  commercial_id      Int
+  processed          Boolean              @default(false)
+  date               DateTime
+  ProductTransaction ProductTransaction[]
+  Commercial         Commercial           @relation(fields: [commercial_id], references: [id], onDelete: Cascade)
+  User               User                 @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
