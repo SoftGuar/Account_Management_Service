@@ -2,7 +2,7 @@ import { DeciderService } from '../../../app/services/deciderService';
 import { DeciderModel } from '../../../app/models/decider.model';
 import bcrypt from 'bcrypt';
 
-jest.mock('../../../app/models/Decider.model');
+jest.mock('../../../app/models/decider.model');
 jest.mock('bcrypt');
 
 describe('DeciderService', () => {
@@ -11,7 +11,7 @@ describe('DeciderService', () => {
   });
 
   describe('createDecider', () => {
-    it('should create an Decider when email axps not exist', async () => {
+    it('should create an Decider when email does not exist', async () => {
       const DeciderData = {
         first_name: 'axp',
         last_name: 'axp',
@@ -75,6 +75,16 @@ describe('DeciderService', () => {
       expect(DeciderModel.findById).toHaveBeenCalledWith(1);
       expect(result).toEqual(Decider);
     });
+
+    it('should return null when decider is not found', async () => {
+      (DeciderModel.findById as jest.Mock).mockResolvedValue(null);
+      
+      const result = await DeciderService.getDeciderById(999);
+      
+      expect(DeciderModel.findById).toHaveBeenCalledWith(999);
+      expect(result).toBeNull();
+    });
+  
   });
 
   describe('getAllDeciders', () => {
@@ -125,5 +135,15 @@ describe('DeciderService', () => {
       expect(DeciderModel.delete).toHaveBeenCalledWith(1);
       expect(result).toBe(true);
     });
+
+    it('should return false when decider deletion fails', async () => {
+      (DeciderModel.delete as jest.Mock).mockResolvedValue(false);
+      
+      const result = await DeciderService.deleteDecider(1);
+      
+      expect(DeciderModel.delete).toHaveBeenCalledWith(1);
+      expect(result).toBe(false);
+    });
+  
   });
 });

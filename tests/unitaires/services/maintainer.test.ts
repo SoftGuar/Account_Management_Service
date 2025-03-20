@@ -11,7 +11,7 @@ describe('MaintainerService', () => {
   });
 
   describe('createMaintainer', () => {
-    it('should create an Maintainer when email axps not exist', async () => {
+    it('should create an Maintainer when email does not exist', async () => {
       const MaintainerData = {
         first_name: 'axp',
         last_name: 'axp',
@@ -75,6 +75,16 @@ describe('MaintainerService', () => {
       expect(MaintainerModel.findById).toHaveBeenCalledWith(1);
       expect(result).toEqual(Maintainer);
     });
+
+    it('should return null when maintainer is not found', async () => {
+      (MaintainerModel.findById as jest.Mock).mockResolvedValue(null);
+      
+      const result = await MaintainerService.getMaintainerById(999);
+      
+      expect(MaintainerModel.findById).toHaveBeenCalledWith(999);
+      expect(result).toBeNull();
+    });
+
   });
 
   describe('getAllMaintainers', () => {
@@ -125,5 +135,15 @@ describe('MaintainerService', () => {
       expect(MaintainerModel.delete).toHaveBeenCalledWith(1);
       expect(result).toBe(true);
     });
+
+    it('should return false when maintainer deletion fails', async () => {
+      (MaintainerModel.delete as jest.Mock).mockResolvedValue(false);
+      
+      const result = await MaintainerService.deleteMaintainer(1);
+      
+      expect(MaintainerModel.delete).toHaveBeenCalledWith(1);
+      expect(result).toBe(false);
+    });
+
   });
 });

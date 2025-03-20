@@ -11,7 +11,7 @@ describe('AdminService', () => {
   });
 
   describe('createAdmin', () => {
-    it('should create an admin when email admins not exist', async () => {
+    it('should create an admin when email does not exist', async () => {
       const adminData = {
         first_name: 'admin',
         last_name: 'admin',
@@ -82,6 +82,16 @@ describe('AdminService', () => {
       expect(AdminModel.findById).toHaveBeenCalledWith(1);
       expect(result).toEqual(admin);
     });
+
+    it('should return null when admin is not found', async () => {
+      (AdminModel.findById as jest.Mock).mockResolvedValue(null);
+      
+      const result = await AdminService.getAdminById(999);
+      
+      expect(AdminModel.findById).toHaveBeenCalledWith(999);
+      expect(result).toBeNull();
+    });
+  
   });
 
   describe('getAllAdmins', () => {
@@ -118,7 +128,7 @@ describe('AdminService', () => {
       const result = await AdminService.updateAdmin(1, updateData);
 
       expect(bcrypt.hash).toHaveBeenCalledWith('newpassword123', 10);
-      expect(AdminModel.update).toHaveBeenCalledWith(1, { password: 'newhashedpassword' });
+      expect(AdminModel.update).toHaveBeenCalledWith(1, { password: 'newhashedpassword', privilege: 2 });
       expect(result).toEqual({ id: 1, password: 'newhashedpassword' });
     });
   });
@@ -132,5 +142,16 @@ describe('AdminService', () => {
       expect(AdminModel.delete).toHaveBeenCalledWith(1);
       expect(result).toBe(true);
     });
+
+
+      it('should return false when admin deletion fails', async () => {
+        (AdminModel.delete as jest.Mock).mockResolvedValue(false);
+        
+        const result = await AdminService.deleteAdmin(1);
+        
+        expect(AdminModel.delete).toHaveBeenCalledWith(1);
+        expect(result).toBe(false);
+      });
+    
   });
 });

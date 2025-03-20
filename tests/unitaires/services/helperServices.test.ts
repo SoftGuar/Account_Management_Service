@@ -11,7 +11,7 @@ describe('HelperService', () => {
   });
 
   describe('createHelper', () => {
-    it('should create an Helper when email not exist', async () => {
+    it('should create an Helper when does not exist', async () => {
       const HelperData = {
         first_name: 'axp',
         last_name: 'axp',
@@ -75,6 +75,15 @@ describe('HelperService', () => {
       expect(HelperModel.findById).toHaveBeenCalledWith(1);
       expect(result).toEqual(Helper);
     });
+    it('should return null when helper is not found', async () => {
+      (HelperModel.findById as jest.Mock).mockResolvedValue(null);
+      
+      const result = await HelperService.getHelperById(999);
+      
+      expect(HelperModel.findById).toHaveBeenCalledWith(999);
+      expect(result).toBeNull();
+    });
+
   });
 
   describe('getAllHelpers', () => {
@@ -125,5 +134,15 @@ describe('HelperService', () => {
       expect(HelperModel.delete).toHaveBeenCalledWith(1);
       expect(result).toBe(true);
     });
+
+    it('should return false when helper deletion fails', async () => {
+      (HelperModel.delete as jest.Mock).mockResolvedValue(false);
+      
+      const result = await HelperService.deleteHelper(1);
+      
+      expect(HelperModel.delete).toHaveBeenCalledWith(1);
+      expect(result).toBe(false);
+    });
+
   });
 });

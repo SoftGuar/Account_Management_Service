@@ -2,7 +2,7 @@ import { CommercialService } from '../../../app/services/commercialService';
 import { CommercialModel } from '../../../app/models/commercial.model';
 import bcrypt from 'bcrypt';
 
-jest.mock('../../../app/models/Commercial.model');
+jest.mock('../../../app/models/commercial.model');
 jest.mock('bcrypt');
 
 describe('CommercialService', () => {
@@ -11,7 +11,7 @@ describe('CommercialService', () => {
   });
 
   describe('createCommercial', () => {
-    it('should create an Commercial when email axps not exist', async () => {
+    it('should create an Commercial when email does not exist', async () => {
       const CommercialData = {
         first_name: 'axp',
         last_name: 'axp',
@@ -75,6 +75,15 @@ describe('CommercialService', () => {
       expect(CommercialModel.findById).toHaveBeenCalledWith(1);
       expect(result).toEqual(Commercial);
     });
+    it('should return null when commercial is not found', async () => {
+      (CommercialModel.findById as jest.Mock).mockResolvedValue(null);
+      
+      const result = await CommercialService.getCommercialById(999);
+      
+      expect(CommercialModel.findById).toHaveBeenCalledWith(999);
+      expect(result).toBeNull();
+    });
+  
   });
 
   describe('getAllCommercials', () => {
@@ -125,5 +134,14 @@ describe('CommercialService', () => {
       expect(CommercialModel.delete).toHaveBeenCalledWith(1);
       expect(result).toBe(true);
     });
+    it('should return false when commercial deletion fails', async () => {
+      (CommercialModel.delete as jest.Mock).mockResolvedValue(false);
+      
+      const result = await CommercialService.deleteCommercial(1);
+      
+      expect(CommercialModel.delete).toHaveBeenCalledWith(1);
+      expect(result).toBe(false);
+    });
+  
   });
 });
