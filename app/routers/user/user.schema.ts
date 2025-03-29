@@ -1,5 +1,6 @@
 // app/routes/api/user.schema.ts
 import { Type } from '@sinclair/typebox';
+import { CommonErrorResponses } from '../baseSchema';
 
 // Définir les schémas de validation en utilisant TypeBox directement
 // au lieu de faire référence aux interfaces du modèle
@@ -42,35 +43,27 @@ export const createUserSchema = {
     201: Type.Object({
       success: Type.Literal(true),
       data: UserType
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const getUsersSchema = {
   tags: ['User'],
-  response: {
-    200: Type.Object({
-      success: Type.Literal(true),
-      data: Type.Array(UserWithHelpersType)
-    })
-  }
 };
 
 export const getUserByIdSchema = {
   tags: ['User'],
   params: Type.Object({
-    id: Type.String()
+    id: Type.String(),
   }),
   response: {
     200: Type.Object({
       success: Type.Literal(true),
-      data: UserWithHelpersType
+      data: UserType,
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
-  }
+    ...CommonErrorResponses,
+  },
 };
 
 export const updateUserSchema = {
@@ -91,7 +84,8 @@ export const updateUserSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       data: UserType
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
@@ -104,7 +98,8 @@ export const deleteUserSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       message: Type.String()
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
@@ -117,7 +112,8 @@ export const getUserHelpersSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       data: Type.Array(HelperType)
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
@@ -131,7 +127,8 @@ export const addHelperToUserSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       data: UserWithHelpersType
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
@@ -145,6 +142,7 @@ export const removeHelperFromUserSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       data: UserWithHelpersType
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };

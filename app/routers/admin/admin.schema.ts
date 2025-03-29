@@ -1,4 +1,5 @@
 import { Type } from '@sinclair/typebox';
+import { CommonErrorResponses } from '../baseSchema';
 
 export const createAdminSchema = {
   tags: ['Admin'],
@@ -23,7 +24,8 @@ export const createAdminSchema = {
         privilege : Type.Number(),
         add_by: Type.Number(),
       })
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
@@ -43,7 +45,8 @@ export const getAdminsSchema = {
           add_by: Type.Number(),
         })
       )
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
@@ -65,10 +68,7 @@ export const getAdminByIdSchema = {
         add_by: Type.Number(),
       })
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
@@ -99,7 +99,8 @@ export const updateAdminSchema = {
         privilege : Type.Number(),
         add_by: Type.Number(),
       })
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
@@ -112,6 +113,7 @@ export const deleteAdminSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       message: Type.String()
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };

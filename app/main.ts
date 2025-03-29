@@ -20,23 +20,13 @@ const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 const domain = process.env.DOMAIN || host+':'+port;
 
 if (!process.env.DATABASE_URL) {
+  logger.fatal('DATABASE_URL environment variable is not set');
   console.error('DATABASE_URL environment variable is not set');
   process.exit(1);
 }
 
 // Use your custom logger when creating Fastify instance
-const fastify = Fastify({
-  logger: {
-    level: process.env.LOG_LEVEL || 'debug',
-    stream: logDestination,
-    timestamp: pino.stdTimeFunctions.isoTime,
-    formatters: {
-      level(label) {
-        return { level: label };
-      },
-    },
-  },
-});
+const fastify = Fastify();
 
 
 async function startServer() {
@@ -71,7 +61,7 @@ async function startServer() {
     const port = Number(process.env.PORT) || 3000;
     const host = process.env.HOST || '0.0.0.0';
     await fastify.listen({ port, host });
-    fastify.log.info(`Server started on port ${port}`);
+    logger.info(`Server listening on ${host}:${port}`);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
@@ -79,6 +69,7 @@ async function startServer() {
 }
 
 const gracefulShutdown = async () => {
+  logger.info('Received shutdown signal');
   console.log('Shutting down gracefully');
   await disconnectPrisma();
   process.exit(0);

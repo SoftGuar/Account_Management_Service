@@ -1,4 +1,5 @@
 import { Type } from '@sinclair/typebox';
+import { CommonErrorResponses } from '../baseSchema';
 
 export const createDeciderSchema = {
   tags: ['Decider'],
@@ -19,7 +20,8 @@ export const createDeciderSchema = {
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
       })
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
@@ -37,7 +39,8 @@ export const getDecidersSchema = {
           phone: Type.Optional(Type.String()),
         })
       )
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
@@ -57,10 +60,7 @@ export const getDeciderByIdSchema = {
         phone: Type.Optional(Type.String()),
       })
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
@@ -88,7 +88,8 @@ export const updateDeciderSchema = {
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
       })
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
@@ -101,6 +102,7 @@ export const deleteDeciderSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       message: Type.String()
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };

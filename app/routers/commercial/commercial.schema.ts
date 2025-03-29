@@ -1,4 +1,5 @@
 import { Type } from '@sinclair/typebox';
+import { CommonErrorResponses } from '../baseSchema';
 
 export const createCommercialSchema = {
   tags: ['Commercial'],
@@ -19,7 +20,8 @@ export const createCommercialSchema = {
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
       })
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
@@ -37,7 +39,8 @@ export const getCommercialsSchema = {
           phone: Type.Optional(Type.String()),
         })
       )
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
@@ -57,10 +60,7 @@ export const getCommercialByIdSchema = {
         phone: Type.Optional(Type.String()),
       })
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
@@ -88,7 +88,8 @@ export const updateCommercialSchema = {
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
       })
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
@@ -101,6 +102,7 @@ export const deleteCommercialSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       message: Type.String()
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
