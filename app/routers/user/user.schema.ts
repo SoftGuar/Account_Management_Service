@@ -1,9 +1,11 @@
 // app/routes/api/user.schema.ts
 import { Type } from '@sinclair/typebox';
+import { CommonErrorResponses } from '../baseSchema';
 
 // Définir les schémas de validation en utilisant TypeBox directement
 // au lieu de faire référence aux interfaces du modèle
 const HelperType = Type.Object({
+
   id: Type.Number(),
   first_name: Type.String(),
   last_name: Type.String(),
@@ -29,6 +31,7 @@ const UserWithHelpersType = Type.Object({
 });
 
 export const createUserSchema = {
+  tags: ['User'],
   body: Type.Object({
     first_name: Type.String(),
     last_name: Type.String(),
@@ -40,36 +43,31 @@ export const createUserSchema = {
     201: Type.Object({
       success: Type.Literal(true),
       data: UserType
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const getUsersSchema = {
-  response: {
-    200: Type.Object({
-      success: Type.Literal(true),
-      data: Type.Array(UserWithHelpersType)
-    })
-  }
+  tags: ['User'],
 };
 
 export const getUserByIdSchema = {
+  tags: ['User'],
   params: Type.Object({
-    id: Type.String()
+    id: Type.String(),
   }),
   response: {
     200: Type.Object({
       success: Type.Literal(true),
-      data: UserWithHelpersType
+      data: UserType,
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
-  }
+    ...CommonErrorResponses,
+  },
 };
 
 export const updateUserSchema = {
+  tags: ['User'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -86,11 +84,13 @@ export const updateUserSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       data: UserType
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const deleteUserSchema = {
+  tags: ['User'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -98,11 +98,13 @@ export const deleteUserSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       message: Type.String()
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const getUserHelpersSchema = {
+  tags: ['User'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -110,11 +112,13 @@ export const getUserHelpersSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       data: Type.Array(HelperType)
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const addHelperToUserSchema = {
+  tags: ['User'],
   params: Type.Object({
     id: Type.String(),
     helperId: Type.String()
@@ -123,11 +127,13 @@ export const addHelperToUserSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       data: UserWithHelpersType
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const removeHelperFromUserSchema = {
+  tags: ['User'],
   params: Type.Object({
     id: Type.String(),
     helperId: Type.String()
@@ -136,6 +142,7 @@ export const removeHelperFromUserSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       data: UserWithHelpersType
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };

@@ -1,6 +1,8 @@
 import { Type } from '@sinclair/typebox';
+import { CommonErrorResponses } from '../baseSchema';
 
 export const createDeciderSchema = {
+  tags: ['Decider'],
   body: Type.Object({
     first_name: Type.String(),
     last_name: Type.String(),
@@ -18,11 +20,13 @@ export const createDeciderSchema = {
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
       })
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const getDecidersSchema = {
+  tags: ['Decider'],
   response: {
     200: Type.Object({
       success: Type.Literal(true),
@@ -35,11 +39,13 @@ export const getDecidersSchema = {
           phone: Type.Optional(Type.String()),
         })
       )
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const getDeciderByIdSchema = {
+  tags: ['Decider'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -54,14 +60,12 @@ export const getDeciderByIdSchema = {
         phone: Type.Optional(Type.String()),
       })
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
 export const updateDeciderSchema = {
+  tags: ['Decider'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -84,11 +88,13 @@ export const updateDeciderSchema = {
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
       })
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const deleteDeciderSchema = {
+  tags: ['Decider'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -96,6 +102,7 @@ export const deleteDeciderSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       message: Type.String()
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };

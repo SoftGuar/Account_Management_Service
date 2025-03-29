@@ -1,3 +1,4 @@
+// app/handlers/commercialHandler.ts
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { CommercialService } from '../services/commercialService';
 import { CreateCommercialInput, UpdateCommercialInput } from '../models/commercial.model';
@@ -6,107 +7,65 @@ export const createCommercial = async (
   request: FastifyRequest<{ Body: CreateCommercialInput }>,
   reply: FastifyReply
 ) => {
-  try {
-    const commercialData = request.body;
-    const newCommercial = await CommercialService.createCommercial(commercialData);
-    
-    return reply.code(201).send({
-      success: true,
-      data: newCommercial
-    });
-  } catch (error) {
-    return reply.code(400).send({
-      success: false,
-      message: error instanceof Error ? error.message : 'An unexpected error occurred'
-    });
-  }
+  const commercialData = request.body;
+  const newCommercial = await CommercialService.createCommercial(commercialData);
+
+  return reply.code(201).send({
+    success: true,
+    data: newCommercial
+  });
 };
 
 export const getCommercials = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  try {
-    const commercials = await CommercialService.getAllCommercials();
-    
-    return reply.code(200).send({
-      success: true,
-      data: commercials
-    });
-  } catch (error) {
-    return reply.code(500).send({
-      success: false,
-      message: 'An unexpected error occurred'
-    });
-  }
+  const commercials = await CommercialService.getAllCommercials();
+
+  return reply.code(200).send({
+    success: true,
+    data: commercials
+  });
 };
 
 export const getCommercialById = async (
   request: FastifyRequest<{ Params: { id: string } }>,
   reply: FastifyReply
 ) => {
-  try {
-    const { id } = request.params;
-    const commercial = await CommercialService.getCommercialById(Number(id));
+  const { id } = request.params;
+  const commercial = await CommercialService.getCommercialById(Number(id));
 
-    if (!commercial) {
-      return reply.code(404).send({
-        success: false,
-        message: 'Commercial not found'
-      });
-    }
-
-    return reply.code(200).send({
-      success: true,
-      data: commercial
-    });
-  } catch (error) {
-    return reply.code(500).send({
-      success: false,
-      message: 'An unexpected error occurred'
-    });
-  }
+  return reply.code(200).send({
+    success: true,
+    data: commercial
+  });
 };
 
 export const updateCommercial = async (
   request: FastifyRequest<{ Params: { id: string }, Body: UpdateCommercialInput }>,
   reply: FastifyReply
 ) => {
-  try {
-    const { id } = request.params;
-    const commercialData = request.body;
-    
-    const updatedCommercial = await CommercialService.updateCommercial(Number(id), commercialData);
+  const { id } = request.params;
+  const commercialData = request.body;
 
-    return reply.code(200).send({
-      success: true,
-      data: updatedCommercial
-    });
-  } catch (error) {
-    return reply.code(400).send({
-      success: false,
-      message: error instanceof Error ? error.message : 'An unexpected error occurred'
-    });
-  }
+  const updatedCommercial = await CommercialService.updateCommercial(Number(id), commercialData);
+
+  return reply.code(200).send({
+    success: true,
+    data: updatedCommercial
+  });
 };
 
 export const deleteCommercial = async (
   request: FastifyRequest<{ Params: { id: string } }>,
   reply: FastifyReply
 ) => {
-  try {
-    const { id } = request.params;
-    
-    await CommercialService.deleteCommercial(Number(id));
+  const { id } = request.params;
 
-    return reply.code(200).send({
-      success: true,
-      message: 'Commercial deleted successfully'
-    });
-  } catch (error) {
-    return reply.code(500).send({
-      success: false,
-      message: 'An unexpected error occurred'
-    });
-  }
+  await CommercialService.deleteCommercial(Number(id));
+
+  return reply.code(200).send({
+    success: true,
+    message: 'Commercial deleted successfully'
+  });
 };
