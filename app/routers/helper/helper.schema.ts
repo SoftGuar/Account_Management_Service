@@ -1,6 +1,7 @@
 import { Type } from '@sinclair/typebox';
 
 export const createHelperSchema = {
+  tags: ['Helper'],
   body: Type.Object({
     first_name: Type.String(),
     last_name: Type.String(),
@@ -23,6 +24,7 @@ export const createHelperSchema = {
 };
 
 export const getHelpersSchema = {
+  tags: ['Helper'],
   response: {
     200: Type.Object({
       success: Type.Literal(true),
@@ -40,6 +42,7 @@ export const getHelpersSchema = {
 };
 
 export const getHelperByIdSchema = {
+  tags: ['Helper'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -62,6 +65,7 @@ export const getHelperByIdSchema = {
 };
 
 export const updateHelperSchema = {
+  tags: ['Helper'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -89,6 +93,7 @@ export const updateHelperSchema = {
 };
 
 export const deleteHelperSchema = {
+  tags: ['Helper'],
   params: Type.Object({
     id: Type.String()
   }),

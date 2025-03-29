@@ -4,6 +4,7 @@ import { Type } from '@sinclair/typebox';
 // Définir les schémas de validation en utilisant TypeBox directement
 // au lieu de faire référence aux interfaces du modèle
 const HelperType = Type.Object({
+
   id: Type.Number(),
   first_name: Type.String(),
   last_name: Type.String(),
@@ -29,6 +30,7 @@ const UserWithHelpersType = Type.Object({
 });
 
 export const createUserSchema = {
+  tags: ['User'],
   body: Type.Object({
     first_name: Type.String(),
     last_name: Type.String(),
@@ -45,6 +47,7 @@ export const createUserSchema = {
 };
 
 export const getUsersSchema = {
+  tags: ['User'],
   response: {
     200: Type.Object({
       success: Type.Literal(true),
@@ -54,6 +57,7 @@ export const getUsersSchema = {
 };
 
 export const getUserByIdSchema = {
+  tags: ['User'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -70,6 +74,7 @@ export const getUserByIdSchema = {
 };
 
 export const updateUserSchema = {
+  tags: ['User'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -91,6 +96,7 @@ export const updateUserSchema = {
 };
 
 export const deleteUserSchema = {
+  tags: ['User'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -103,6 +109,7 @@ export const deleteUserSchema = {
 };
 
 export const getUserHelpersSchema = {
+  tags: ['User'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -115,6 +122,7 @@ export const getUserHelpersSchema = {
 };
 
 export const addHelperToUserSchema = {
+  tags: ['User'],
   params: Type.Object({
     id: Type.String(),
     helperId: Type.String()
@@ -128,6 +136,7 @@ export const addHelperToUserSchema = {
 };
 
 export const removeHelperFromUserSchema = {
+  tags: ['User'],
   params: Type.Object({
     id: Type.String(),
     helperId: Type.String()

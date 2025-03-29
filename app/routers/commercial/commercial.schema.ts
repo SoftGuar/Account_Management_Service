@@ -1,6 +1,7 @@
 import { Type } from '@sinclair/typebox';
 
 export const createCommercialSchema = {
+  tags: ['Commercial'],
   body: Type.Object({
     first_name: Type.String(),
     last_name: Type.String(),
@@ -23,6 +24,7 @@ export const createCommercialSchema = {
 };
 
 export const getCommercialsSchema = {
+  tags: ['Commercial'],
   response: {
     200: Type.Object({
       success: Type.Literal(true),
@@ -40,6 +42,7 @@ export const getCommercialsSchema = {
 };
 
 export const getCommercialByIdSchema = {
+  tags: ['Commercial'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -62,6 +65,7 @@ export const getCommercialByIdSchema = {
 };
 
 export const updateCommercialSchema = {
+  tags: ['Commercial'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -89,6 +93,7 @@ export const updateCommercialSchema = {
 };
 
 export const deleteCommercialSchema = {
+  tags: ['Commercial'],
   params: Type.Object({
     id: Type.String()
   }),

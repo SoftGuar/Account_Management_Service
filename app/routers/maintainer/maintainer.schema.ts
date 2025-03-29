@@ -1,6 +1,7 @@
 import { Type } from '@sinclair/typebox';
 
 export const createMaintainerSchema = {
+  tags: ['Maintainer'],
   body: Type.Object({
     first_name: Type.String(),
     last_name: Type.String(),
@@ -23,6 +24,7 @@ export const createMaintainerSchema = {
 };
 
 export const getMaintainersSchema = {
+  tags: ['Maintainer'],
   response: {
     200: Type.Object({
       success: Type.Literal(true),
@@ -40,6 +42,7 @@ export const getMaintainersSchema = {
 };
 
 export const getMaintainerByIdSchema = {
+  tags: ['Maintainer'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -62,6 +65,7 @@ export const getMaintainerByIdSchema = {
 };
 
 export const updateMaintainerSchema = {
+  tags: ['Maintainer'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -89,6 +93,7 @@ export const updateMaintainerSchema = {
 };
 
 export const deleteMaintainerSchema = {
+  tags: ['Maintainer'],
   params: Type.Object({
     id: Type.String()
   }),

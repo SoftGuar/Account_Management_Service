@@ -1,6 +1,7 @@
 import { Type } from '@sinclair/typebox';
 
 export const createDeciderSchema = {
+  tags: ['Decider'],
   body: Type.Object({
     first_name: Type.String(),
     last_name: Type.String(),
@@ -23,6 +24,7 @@ export const createDeciderSchema = {
 };
 
 export const getDecidersSchema = {
+  tags: ['Decider'],
   response: {
     200: Type.Object({
       success: Type.Literal(true),
@@ -40,6 +42,7 @@ export const getDecidersSchema = {
 };
 
 export const getDeciderByIdSchema = {
+  tags: ['Decider'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -62,6 +65,7 @@ export const getDeciderByIdSchema = {
 };
 
 export const updateDeciderSchema = {
+  tags: ['Decider'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -89,6 +93,7 @@ export const updateDeciderSchema = {
 };
 
 export const deleteDeciderSchema = {
+  tags: ['Decider'],
   params: Type.Object({
     id: Type.String()
   }),

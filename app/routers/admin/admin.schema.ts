@@ -1,6 +1,7 @@
 import { Type } from '@sinclair/typebox';
 
 export const createAdminSchema = {
+  tags: ['Admin'],
   body: Type.Object({
     first_name: Type.String(),
     last_name: Type.String(),
@@ -27,6 +28,7 @@ export const createAdminSchema = {
 };
 
 export const getAdminsSchema = {
+  tags: ['Admin'],
   response: {
     200: Type.Object({
       success: Type.Literal(true),
@@ -46,6 +48,7 @@ export const getAdminsSchema = {
 };
 
 export const getAdminByIdSchema = {
+  tags: ['Admin'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -70,6 +73,7 @@ export const getAdminByIdSchema = {
 };
 
 export const updateAdminSchema = {
+  tags: ['Admin'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -100,6 +104,7 @@ export const updateAdminSchema = {
 };
 
 export const deleteAdminSchema = {
+  tags: ['Admin'],
   params: Type.Object({
     id: Type.String()
   }),
