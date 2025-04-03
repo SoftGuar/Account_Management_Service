@@ -8,6 +8,7 @@ import {
   deleteUser,
   getUserHelpers,
   addHelperToUser,
+  getUserByEmail,
   removeHelperFromUser
 } from '../../handlers/userHandler';
 import { 
@@ -17,6 +18,7 @@ import {
   getUsersSchema, 
   updateUserSchema,
   getUserHelpersSchema,
+  getUserByEmailSchema,
   addHelperToUserSchema,
   removeHelperFromUserSchema
 } from './user.schema';
@@ -36,6 +38,10 @@ const userRoutes = async (fastify: FastifyInstance) => {
   
   // DELETE /users/:id - Delete a user by ID
   fastify.delete('/:id', { schema: deleteUserSchema }, deleteUser);
+
+  // Add this route inside the userRoutes function
+fastify.get('/by-email', { schema: getUserByEmailSchema }, getUserByEmail);
+
   
   fastify.get('/:id/helpers', { schema: getUserHelpersSchema }, getUserHelpers);
   
