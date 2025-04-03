@@ -1,0 +1,42 @@
+name: Deploy Accounts App
+
+on:
+  push:
+    branches:
+      - main  # Change to your deployment branch if needed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          cat >> ~/.ssh/config <<EOL
+          Host telebit-server
+            HostName ${{ secrets.REMOTE_HOST }}
+            User ${{ secrets.REMOTE_USER }}
+            ProxyCommand openssl s_client -connect %h:443 -servername %h -quiet
+            IdentityFile ~/.ssh/id_rsa
+            StrictHostKeyChecking no
+          EOL
+
+      - name: Deploy via SSH
+        run: |
+          ssh telebit-server << 'EOF'
+            cd Account_Management_Service/  # Change to your app directory
+            git pull origin main  # Pull latest changes
+            npm install  # Install dependencies
+            npx prisma generate --schema="app/prisma/schema.prisma"
+            npm run build  # (Optional) Build the app
+            pm2 stop accounts-app || true  # Stop app if running
+            pm2 start npm --name "accounts-app" -- run dev  # Start app
+            pm2 save  # Save PM2 process
+            pm2 list  # Show running apps
+          EOF

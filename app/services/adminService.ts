@@ -1,42 +1,85 @@
+// app/services/adminService.ts
 import { AdminModel, CreateAdminInput, UpdateAdminInput } from '../models/admin.model';
 import bcrypt from 'bcrypt';
+import {
+  AccountAlreadyExistsError,
+  AccountNotFoundError,
+  AccountCreationError,
+  AccountUpdateError,
+  AccountDeletionError,
+  AccountFetchError,
+} from '../errors/accounts.error';
 
 export const AdminService = {
   createAdmin: async (adminData: CreateAdminInput) => {
-    // Vérifier si un admin avec cet email existe déjà
-    const existingAdmin = await AdminModel.findByEmail(adminData.email);
-    
-    if (existingAdmin) {
-      throw new Error('Admin with this email already exists');
+    try {
+      const existingAdmin = await AdminModel.findByEmail(adminData.email);
+      if (existingAdmin) {
+        throw new AccountAlreadyExistsError('Admin', adminData.email);
+      }
+
+      const hashedPassword = await bcrypt.hash(adminData.password, 10);
+
+      return await AdminModel.create({
+        ...adminData,
+        password: hashedPassword,
+      });
+    } catch (error) {
+      if (error instanceof AccountAlreadyExistsError) throw error;
+      throw new AccountCreationError('Admin', { originalError: error });
     }
-
-    // Hash du mot de passe
-    const hashedPassword = await bcrypt.hash(adminData.password, 10);
-
-    return AdminModel.create({
-      ...adminData,
-      password: hashedPassword
-    });
   },
 
   getAdminById: async (id: number) => {
-    return AdminModel.findById(id);
+    try {
+      const admin = await AdminModel.findById(id);
+      if (!admin) {
+        throw new AccountNotFoundError('Admin', id);
+      }
+      return admin;
+    } catch (error) {
+      if (error instanceof AccountNotFoundError) throw error;
+      throw new AccountFetchError('Admin', id, { originalError: error });
+    }
   },
 
   getAllAdmins: async () => {
-    return AdminModel.getAll();
+    try {
+      return await AdminModel.getAll();
+    } catch (error) {
+      throw new AccountFetchError('Admin', undefined, { originalError: error });
+    }
   },
 
   updateAdmin: async (id: number, adminData: UpdateAdminInput) => {
-    // If updating password, hash it
-    if (adminData.password) {
-      adminData.password = await bcrypt.hash(adminData.password, 10);
-    }
+    try {
+      const admin = await AdminModel.findById(id);
+      if (!admin) {
+        throw new AccountNotFoundError('Admin', id);
+      }
 
-    return AdminModel.update(id, adminData);
+      if (adminData.password) {
+        adminData.password = await bcrypt.hash(adminData.password, 10);
+      }
+
+      return await AdminModel.update(id, adminData);
+    } catch (error) {
+      if (error instanceof AccountNotFoundError) throw error;
+      throw new AccountUpdateError('Admin', id, { originalError: error });
+    }
   },
 
   deleteAdmin: async (id: number) => {
-    return AdminModel.delete(id);
-  }
+    try {
+      const admin = await AdminModel.findById(id);
+      if (!admin) {
+        throw new AccountNotFoundError('Admin', id);
+      }
+
+      return await AdminModel.delete(id);
+    } catch (error) {
+      if (error instanceof AccountNotFoundError) throw error;
+      throw new AccountDeletionError('Admin', id, { originalError: error });
+    }
+  },
 };

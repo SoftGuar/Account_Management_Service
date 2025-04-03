@@ -1,40 +1,85 @@
+// app/services/commercialService.ts
 import { CommercialModel, CreateCommercialInput, UpdateCommercialInput } from '../models/commercial.model';
 import bcrypt from 'bcrypt';
+import {
+  AccountAlreadyExistsError,
+  AccountNotFoundError,
+  AccountCreationError,
+  AccountUpdateError,
+  AccountDeletionError,
+  AccountFetchError,
+} from '../errors/accounts.error';
 
 export const CommercialService = {
   createCommercial: async (commercialData: CreateCommercialInput) => {
-    const existingCommercial = await CommercialModel.findByEmail(commercialData.email);
-    
-    if (existingCommercial) {
-      throw new Error('Commercial with this email already exists');
+    try {
+      const existingCommercial = await CommercialModel.findByEmail(commercialData.email);
+      if (existingCommercial) {
+        throw new AccountAlreadyExistsError('Commercial', commercialData.email);
+      }
+
+      const hashedPassword = await bcrypt.hash(commercialData.password, 10);
+
+      return await CommercialModel.create({
+        ...commercialData,
+        password: hashedPassword,
+      });
+    } catch (error) {
+      if (error instanceof AccountAlreadyExistsError) throw error;
+      throw new AccountCreationError('Commercial', { originalError: error });
     }
-
-    // Hash du mot de passe
-    const hashedPassword = await bcrypt.hash(commercialData.password, 10);
-
-    return CommercialModel.create({
-      ...commercialData,
-      password: hashedPassword
-    });
   },
 
   getCommercialById: async (id: number) => {
-    return CommercialModel.findById(id);
+    try {
+      const commercial = await CommercialModel.findById(id);
+      if (!commercial) {
+        throw new AccountNotFoundError('Commercial', id);
+      }
+      return commercial;
+    } catch (error) {
+      if (error instanceof AccountNotFoundError) throw error;
+      throw new AccountFetchError('Commercial', id, { originalError: error });
+    }
   },
 
   getAllCommercials: async () => {
-    return CommercialModel.getAll();
+    try {
+      return await CommercialModel.getAll();
+    } catch (error) {
+      throw new AccountFetchError('Commercial', undefined, { originalError: error });
+    }
   },
 
   updateCommercial: async (id: number, commercialData: UpdateCommercialInput) => {
-    if (commercialData.password) {
-      commercialData.password = await bcrypt.hash(commercialData.password, 10);
-    }
+    try {
+      const commercial = await CommercialModel.findById(id);
+      if (!commercial) {
+        throw new AccountNotFoundError('Commercial', id);
+      }
 
-    return CommercialModel.update(id, commercialData);
+      if (commercialData.password) {
+        commercialData.password = await bcrypt.hash(commercialData.password, 10);
+      }
+
+      return await CommercialModel.update(id, commercialData);
+    } catch (error) {
+      if (error instanceof AccountNotFoundError) throw error;
+      throw new AccountUpdateError('Commercial', id, { originalError: error });
+    }
   },
 
   deleteCommercial: async (id: number) => {
-    return CommercialModel.delete(id);
-  }
+    try {
+      const commercial = await CommercialModel.findById(id);
+      if (!commercial) {
+        throw new AccountNotFoundError('Commercial', id);
+      }
+
+      return await CommercialModel.delete(id);
+    } catch (error) {
+      if (error instanceof AccountNotFoundError) throw error;
+      throw new AccountDeletionError('Commercial', id, { originalError: error });
+    }
+  },
 };

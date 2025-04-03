@@ -1,6 +1,8 @@
 import { Type } from '@sinclair/typebox';
+import { CommonErrorResponses } from '../baseSchema';
 
 export const createHelperSchema = {
+  tags: ['Helper'],
   body: Type.Object({
     first_name: Type.String(),
     last_name: Type.String(),
@@ -17,12 +19,14 @@ export const createHelperSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
-      })
-    })
+      }),
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const getHelpersSchema = {
+  tags: ['Helper'],
   response: {
     200: Type.Object({
       success: Type.Literal(true),
@@ -35,11 +39,13 @@ export const getHelpersSchema = {
           phone: Type.Optional(Type.String()),
         })
       )
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const getHelperByIdSchema = {
+  tags: ['Helper'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -54,14 +60,12 @@ export const getHelperByIdSchema = {
         phone: Type.Optional(Type.String()),
       })
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
 export const updateHelperSchema = {
+  tags: ['Helper'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -84,11 +88,13 @@ export const updateHelperSchema = {
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
       })
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const deleteHelperSchema = {
+  tags: ['Helper'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -96,6 +102,7 @@ export const deleteHelperSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       message: Type.String()
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };

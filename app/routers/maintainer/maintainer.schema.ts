@@ -1,6 +1,8 @@
 import { Type } from '@sinclair/typebox';
+import { CommonErrorResponses } from '../baseSchema';
 
 export const createMaintainerSchema = {
+  tags: ['Maintainer'],
   body: Type.Object({
     first_name: Type.String(),
     last_name: Type.String(),
@@ -18,11 +20,13 @@ export const createMaintainerSchema = {
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
       })
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const getMaintainersSchema = {
+  tags: ['Maintainer'],
   response: {
     200: Type.Object({
       success: Type.Literal(true),
@@ -35,11 +39,13 @@ export const getMaintainersSchema = {
           phone: Type.Optional(Type.String()),
         })
       )
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const getMaintainerByIdSchema = {
+  tags: ['Maintainer'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -54,14 +60,12 @@ export const getMaintainerByIdSchema = {
         phone: Type.Optional(Type.String()),
       })
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
-  }
+    ...CommonErrorResponses,
+}
 };
 
 export const updateMaintainerSchema = {
+  tags: ['Maintainer'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -84,11 +88,13 @@ export const updateMaintainerSchema = {
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
       })
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const deleteMaintainerSchema = {
+  tags: ['Maintainer'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -96,6 +102,7 @@ export const deleteMaintainerSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       message: Type.String()
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };

@@ -1,6 +1,8 @@
 import { Type } from '@sinclair/typebox';
+import { CommonErrorResponses } from '../baseSchema';
 
 export const createCommercialSchema = {
+  tags: ['Commercial'],
   body: Type.Object({
     first_name: Type.String(),
     last_name: Type.String(),
@@ -18,11 +20,13 @@ export const createCommercialSchema = {
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
       })
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const getCommercialsSchema = {
+  tags: ['Commercial'],
   response: {
     200: Type.Object({
       success: Type.Literal(true),
@@ -35,11 +39,13 @@ export const getCommercialsSchema = {
           phone: Type.Optional(Type.String()),
         })
       )
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const getCommercialByIdSchema = {
+  tags: ['Commercial'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -54,14 +60,12 @@ export const getCommercialByIdSchema = {
         phone: Type.Optional(Type.String()),
       })
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
 export const updateCommercialSchema = {
+  tags: ['Commercial'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -84,11 +88,13 @@ export const updateCommercialSchema = {
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
       })
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
 
 export const deleteCommercialSchema = {
+  tags: ['Commercial'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -96,6 +102,7 @@ export const deleteCommercialSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       message: Type.String()
-    })
+    }),
+    ...CommonErrorResponses,
   }
 };
