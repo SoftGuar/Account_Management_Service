@@ -5,7 +5,6 @@ import { CommonErrorResponses } from '../baseSchema';
 // Définir les schémas de validation en utilisant TypeBox directement
 // au lieu de faire référence aux interfaces du modèle
 const HelperType = Type.Object({
-
   id: Type.Number(),
   first_name: Type.String(),
   last_name: Type.String(),
@@ -19,6 +18,7 @@ const UserType = Type.Object({
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
   phone: Type.Optional(Type.String()),
+  created_at: Type.String({ format: 'date-time' })
 });
 
 const UserWithHelpersType = Type.Object({
@@ -27,6 +27,7 @@ const UserWithHelpersType = Type.Object({
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
   phone: Type.Optional(Type.String()),
+  created_at: Type.String({ format: 'date-time' }),
   helpers: Type.Optional(Type.Array(HelperType))
 });
 
@@ -38,6 +39,7 @@ export const createUserSchema = {
     email: Type.String({ format: 'email' }),
     password: Type.String(),
     phone: Type.Optional(Type.String()),
+
   }),
   response: {
     201: Type.Object({
@@ -50,12 +52,35 @@ export const createUserSchema = {
 
 export const getUsersSchema = {
   tags: ['User'],
+  response: {
+    200: Type.Object({
+      success: Type.Literal(true),
+      data: Type.Array(UserType),
+    }),
+    ...CommonErrorResponses,
+  },
 };
+
+
 
 export const getUserByIdSchema = {
   tags: ['User'],
   params: Type.Object({
     id: Type.String(),
+  }),
+  response: {
+    200: Type.Object({
+      success: Type.Literal(true),
+      data: UserType,
+    }),
+    ...CommonErrorResponses,
+  },
+};
+
+export const getUserByEmailSchema = {
+  tags: ['User'],
+  querystring: Type.Object({
+    email: Type.String({ format: 'email' }),
   }),
   response: {
     200: Type.Object({

@@ -1,4 +1,3 @@
-// app/models/user.model.ts
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -25,6 +24,8 @@ export interface UserOutput {
   last_name: string;
   email: string;
   phone?: string | null; // Accepter null ou undefined
+  created_at :Date;
+
   helpers?: {
     id: number;
     first_name: string;
@@ -44,6 +45,8 @@ export const UserModel = {
         last_name: true,
         email: true,
         phone: true,
+        created_at :true,
+
       },
     });
     return user;
@@ -58,6 +61,7 @@ export const UserModel = {
         last_name: true,
         email: true,
         phone: true,
+        created_at :true,
       },
     });
   },
@@ -71,6 +75,7 @@ export const UserModel = {
         last_name: true,
         email: true,
         phone: true,
+        created_at :true,
         helpers: {
           select: {
             id: true,
@@ -92,6 +97,7 @@ export const UserModel = {
         last_name: true,
         email: true,
         phone: true,
+        created_at :true,
         helpers: {
           select: {
             id: true,
@@ -115,6 +121,7 @@ export const UserModel = {
         last_name: true,
         email: true,
         phone: true,
+        created_at :true,
       },
     });
   },
@@ -140,6 +147,7 @@ export const UserModel = {
         last_name: true,
         email: true,
         phone: true,
+        created_at :true,
         helpers: {
           select: {
             id: true,
@@ -167,6 +175,8 @@ export const UserModel = {
         last_name: true,
         email: true,
         phone: true,
+        created_at :true,
+
         helpers: {
           select: {
             id: true,

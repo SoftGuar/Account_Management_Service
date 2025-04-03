@@ -43,6 +43,19 @@ export const UserService = {
     }
   },
 
+  getUserByEmail: async (email: string) => {
+    try {
+      const user = await UserModel.findByEmail(email);
+      if (!user) {
+        throw new AccountNotFoundError('User', email);
+      }
+      return user;
+    } catch (error) {
+      if (error instanceof AccountNotFoundError) throw error;
+      throw new AccountFetchError('User', email, { originalError: error });
+    }
+  },
+
   getAllUsers: async () => {
     try {
       return await UserModel.getAll();
