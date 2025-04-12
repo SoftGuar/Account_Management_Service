@@ -80,5 +80,23 @@ export const HelperModel = {
       console.error('Error deleting helper:', error);
       throw error;
     }
-  }
+  },
+  getHelperUsers : async (helperId: number) => {
+    return prisma.helper.findUnique({
+      where: { id: helperId },
+      select: {
+        users: {
+          select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            email: true,
+            phone: true,
+            created_at:true,
+          },
+        },
+      },
+    });
+  },
+
 };

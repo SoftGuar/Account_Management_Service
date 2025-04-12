@@ -82,4 +82,13 @@ export const HelperService = {
       throw new AccountDeletionError('Helper', id, { originalError: error });
     }
   },
+  getHelperUsers: async (helperId: number) => {
+      try {
+        const result = await HelperModel.getHelperUsers(helperId);
+        return result?.users || [];
+      } catch (error) {
+        throw new AccountFetchError('Helper Users', helperId, { originalError: error });
+      }
+    },
+  
 };

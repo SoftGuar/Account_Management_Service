@@ -1,11 +1,12 @@
 import { FastifyInstance } from 'fastify';
-import { createHelper, getHelpers, getHelperById, updateHelper, deleteHelper } from '../../handlers/helperHandler';
+import { createHelper, getHelpers, getHelperById, updateHelper, deleteHelper,getHelperUsers } from '../../handlers/helperHandler';
 import { 
   createHelperSchema, 
   deleteHelperSchema, 
   getHelperByIdSchema, 
   getHelpersSchema, 
-  updateHelperSchema 
+  updateHelperSchema ,
+  getHelperUsersSchema
 } from './helper.schema';
 
 const helperRoutes = async (fastify: FastifyInstance) => {
@@ -14,6 +15,8 @@ const helperRoutes = async (fastify: FastifyInstance) => {
   fastify.get('/:id', { schema: getHelperByIdSchema }, getHelperById);
   fastify.put('/:id', { schema: updateHelperSchema }, updateHelper);
   fastify.delete('/:id', { schema: deleteHelperSchema }, deleteHelper);
+  fastify.get('/:id/users', { schema: getHelperUsersSchema }, getHelperUsers);
+  
 };
 
 export default helperRoutes;
