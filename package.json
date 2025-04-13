@@ -24,7 +24,8 @@
     "nodemon": "^3.1.9",
     "pino": "^9.6.0",
     "pino-multi-stream": "^6.0.0",
-    "pino-pretty": "^13.0.0"
+    "pino-pretty": "^13.0.0",
+    "systeminformation": "^5.25.11"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

@@ -8,6 +8,7 @@ import pino from 'pino';
 import { destination as logDestination } from './utils/logger/streams'; // <-- Add this import
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
+import { writeReport } from './utils/executive_report';
 
 // Load environment variables
 dotenv.config();
@@ -62,6 +63,7 @@ async function startServer() {
     const host = process.env.HOST || '0.0.0.0';
     await fastify.listen({ port, host });
     logger.info(`Server listening on ${host}:${port}`);
+    setInterval(writeReport, 10000);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
