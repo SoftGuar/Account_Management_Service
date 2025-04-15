@@ -19,7 +19,12 @@ export const createCommercialSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
+
       })
+
     }),
     ...CommonErrorResponses,
   }
@@ -37,6 +42,10 @@ export const getCommercialsSchema = {
           last_name: Type.String(),
           email: Type.String({ format: 'email' }),
           phone: Type.Optional(Type.String()),
+          created_at: Type.String({ format: 'date-time' }),
+          updated_at: Type.String({ format: 'date-time' })
+  
+  
         })
       )
     }),
@@ -58,6 +67,10 @@ export const getCommercialByIdSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
+
       })
     }),
     ...CommonErrorResponses,
@@ -87,6 +100,10 @@ export const updateCommercialSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
+
       })
     }),
     ...CommonErrorResponses,

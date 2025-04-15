@@ -23,6 +23,10 @@ export const createAdminSchema = {
         phone: Type.Optional(Type.String()),
         privilege : Type.Number(),
         add_by: Type.Number(),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
+
       })
     }),
     ...CommonErrorResponses,
@@ -43,6 +47,10 @@ export const getAdminsSchema = {
           phone: Type.Optional(Type.String()),
           privilege : Type.Number(),
           add_by: Type.Number(),
+          created_at: Type.String({ format: 'date-time' }),
+          updated_at: Type.String({ format: 'date-time' })
+  
+  
         })
       )
     }),
@@ -66,6 +74,8 @@ export const getAdminByIdSchema = {
         phone: Type.Optional(Type.String()),
         privilege : Type.Number(),
         add_by: Type.Number(),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
       })
     }),
     ...CommonErrorResponses,
@@ -98,6 +108,10 @@ export const updateAdminSchema = {
         phone: Type.Optional(Type.String()),
         privilege : Type.Number(),
         add_by: Type.Number(),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
+
       })
     }),
     ...CommonErrorResponses,

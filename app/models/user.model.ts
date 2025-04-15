@@ -25,13 +25,16 @@ export interface UserOutput {
   email: string;
   phone?: string | null; // Accepter null ou undefined
   created_at :Date;
+  updated_at :Date;
 
   helpers?: {
     id: number;
     first_name: string;
     last_name: string;
     email: string;
-    phone?: string | null; // Accepter null ou undefined
+    phone?: string | null;
+    created_at :Date;
+    updated_at :Date;
   }[];
 }
 
@@ -46,6 +49,7 @@ export const UserModel = {
         email: true,
         phone: true,
         created_at :true,
+        updated_at:true
 
       },
     });
@@ -62,6 +66,7 @@ export const UserModel = {
         email: true,
         phone: true,
         created_at :true,
+        updated_at:true
       },
     });
   },
@@ -76,6 +81,7 @@ export const UserModel = {
         email: true,
         phone: true,
         created_at :true,
+        updated_at:true,
         helpers: {
           select: {
             id: true,
@@ -83,6 +89,9 @@ export const UserModel = {
             last_name: true,
             email: true,
             phone: true,
+            created_at :true,
+            updated_at:true
+    
           },
         },
       },
@@ -98,6 +107,7 @@ export const UserModel = {
         email: true,
         phone: true,
         created_at :true,
+        updated_at:true,
         helpers: {
           select: {
             id: true,
@@ -105,6 +115,8 @@ export const UserModel = {
             last_name: true,
             email: true,
             phone: true,
+            created_at :true,
+            updated_at:true    
           },
         },
       },
@@ -122,6 +134,7 @@ export const UserModel = {
         email: true,
         phone: true,
         created_at :true,
+        updated_at:true,
       },
     });
   },
@@ -148,6 +161,7 @@ export const UserModel = {
         email: true,
         phone: true,
         created_at :true,
+        updated_at:true,
         helpers: {
           select: {
             id: true,
@@ -155,6 +169,9 @@ export const UserModel = {
             last_name: true,
             email: true,
             phone: true,
+            created_at :true,
+            updated_at:true
+    
           },
         },
       },
@@ -176,7 +193,7 @@ export const UserModel = {
         email: true,
         phone: true,
         created_at :true,
-
+        updated_at:true,
         helpers: {
           select: {
             id: true,
@@ -184,6 +201,9 @@ export const UserModel = {
             last_name: true,
             email: true,
             phone: true,
+            created_at :true,
+            updated_at:true
+    
           },
         },
       },
@@ -201,6 +221,9 @@ export const UserModel = {
             last_name: true,
             email: true,
             phone: true,
+            created_at :true,
+            updated_at:true
+    
           },
         },
       },
