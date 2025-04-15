@@ -19,6 +19,9 @@ export const createDeciderSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
       })
     }),
     ...CommonErrorResponses,
@@ -37,6 +40,9 @@ export const getDecidersSchema = {
           last_name: Type.String(),
           email: Type.String({ format: 'email' }),
           phone: Type.Optional(Type.String()),
+          created_at: Type.String({ format: 'date-time' }),
+          updated_at: Type.String({ format: 'date-time' })
+  
         })
       )
     }),
@@ -58,6 +64,9 @@ export const getDeciderByIdSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
       })
     }),
     ...CommonErrorResponses,
@@ -76,6 +85,7 @@ export const updateDeciderSchema = {
       email: Type.String({ format: 'email' }),
       password: Type.String(),
       phone: Type.Optional(Type.String()),
+      
     })
   ),
   response: {
@@ -87,6 +97,9 @@ export const updateDeciderSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
       })
     }),
     ...CommonErrorResponses,

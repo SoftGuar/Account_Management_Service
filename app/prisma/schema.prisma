@@ -14,6 +14,9 @@ model Decider {
   email      String  @unique
   password   String
   phone      String?
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @default(now())
+
 }
 
 model SuperAdmin {
@@ -35,6 +38,9 @@ model Admin {
   phone      String?
   add_by     Int
   privilege  Int
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @default(now())
+
   superAdmin SuperAdmin @relation(fields: [add_by], references: [id], onDelete: Cascade)
 }
 
@@ -45,22 +51,26 @@ model Maintainer {
   email        String         @unique
   password     String
   phone        String?
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @default(now())
   DispoIssue   DispoIssue[]
   Intervention Intervention[]
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  email       String        @unique
-  first_name  String
-  last_name   String
-  password    String
-  phone       String?
+  id           Int            @id @default(autoincrement())
+  email        String         @unique
+  first_name   String
+  last_name    String
+  password     String
+  phone        String?
   created_at  DateTime      @default(now())
-  Dispositive Dispositive[]
-  Quotation   Quotation[]
-  Transaction Transaction[]
-  helpers     Helper[]      @relation("UserHelpers")
+  updated_at  DateTime      @default(now())
+  Dispositive  Dispositive[]
+  Notification Notification[]
+  Quotation    Quotation[]
+  Transaction  Transaction[]
+  helpers      Helper[]       @relation("UserHelpers")
 }
 
 model Helper {
@@ -71,6 +81,9 @@ model Helper {
   password   String
   phone      String?
   users      User[]  @relation("UserHelpers")
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @default(now())
+
 }
 
 model Commercial {
@@ -81,6 +94,9 @@ model Commercial {
   password    String
   phone       String?
   Transaction Transaction[]
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @default(now())
+
 }
 
 model Dispositive {
@@ -93,6 +109,8 @@ model Dispositive {
   state              String
   user_id            Int?
   product_id         Int
+  created_at         DateTime             @default(now())
+  updated_at         DateTime
   DispoIssue         DispoIssue[]
   Product            Product              @relation(fields: [product_id], references: [id], onDelete: Cascade)
   User               User?                @relation(fields: [user_id], references: [id], onDelete: Cascade)
@@ -105,6 +123,8 @@ model Product {
   name             String
   description      String?
   price            Float
+  created_at       DateTime           @default(now())
+  updated_at       DateTime
   Dispositive      Dispositive[]
   ProductQuotation ProductQuotation[]
 }
@@ -113,6 +133,8 @@ model ProductQuotation {
   quotation_id Int
   product_id   Int
   count        Int
+  created_at   DateTime  @default(now())
+  updated_at   DateTime
   Product      Product   @relation(fields: [product_id], references: [id], onDelete: Cascade)
   Quotation    Quotation @relation(fields: [quotation_id], references: [id], onDelete: Cascade)
 
@@ -120,18 +142,22 @@ model ProductQuotation {
 }
 
 model ProductTransaction {
-  id             Int         @id @default(autoincrement())
   transaction_id Int
   dispositive_id Int
   isConfirmed    Boolean     @default(false)
+  created_at     DateTime    @default(now())
+  updated_at     DateTime
   Dispositive    Dispositive @relation(fields: [dispositive_id], references: [id])
-  Transaction    Transaction @relation(fields: [transaction_id], references: [id])
+  Transaction    Transaction @relation(fields: [transaction_id], references: [id], onDelete: Cascade)
+
+  @@id([transaction_id, dispositive_id])
 }
 
 model Quotation {
   id               Int                @id @default(autoincrement())
   user_id          Int
-  date             DateTime
+  created_at       DateTime           @default(now())
+  updated_at       DateTime
   ProductQuotation ProductQuotation[]
   User             User               @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
@@ -140,8 +166,8 @@ model Transaction {
   id                 Int                  @id @default(autoincrement())
   user_id            Int
   commercial_id      Int
-  processed          Boolean              @default(false)
-  date               DateTime
+  created_at         DateTime             @default(now())
+  updated_at         DateTime
   ProductTransaction ProductTransaction[]
   Commercial         Commercial           @relation(fields: [commercial_id], references: [id], onDelete: Cascade)
   User               User                 @relation(fields: [user_id], references: [id], onDelete: Cascade)
@@ -179,6 +205,22 @@ model InterventionReport {
   description    String
   created_at     DateTime     @default(now())
   Intervention   Intervention @relation(fields: [interventionId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id         Int       @id @default(autoincrement())
+  user_id    Int
+  type       String?
+  channel    String?
+  title      String
+  message    String
+  metadata   Json?
+  is_read    Boolean   @default(false)
+  status     String    @default("pending")
+  created_at DateTime  @default(now())
+  sent_at    DateTime?
+  read_at    DateTime?
+  User       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 enum InterventionStatus {

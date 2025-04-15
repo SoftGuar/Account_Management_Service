@@ -19,6 +19,10 @@ export const createMaintainerSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
+
       })
     }),
     ...CommonErrorResponses,
@@ -37,6 +41,10 @@ export const getMaintainersSchema = {
           last_name: Type.String(),
           email: Type.String({ format: 'email' }),
           phone: Type.Optional(Type.String()),
+          created_at: Type.String({ format: 'date-time' }),
+          updated_at: Type.String({ format: 'date-time' })
+  
+  
         })
       )
     }),
@@ -58,6 +66,10 @@ export const getMaintainerByIdSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
+
       })
     }),
     ...CommonErrorResponses,
@@ -87,6 +99,10 @@ export const updateMaintainerSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
+
       })
     }),
     ...CommonErrorResponses,

@@ -19,6 +19,9 @@ export const createHelperSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
       }),
     }),
     ...CommonErrorResponses,
@@ -37,6 +40,8 @@ export const getHelpersSchema = {
           last_name: Type.String(),
           email: Type.String({ format: 'email' }),
           phone: Type.Optional(Type.String()),
+          created_at: Type.String({ format: 'date-time' }),
+          updated_at: Type.String({ format: 'date-time' })
         })
       )
     }),
@@ -57,7 +62,9 @@ export const getHelperByIdSchema = {
         first_name: Type.String(),
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
-        phone: Type.Optional(Type.String()),
+        phone: Type.Optional(Type.String()),        
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
       })
     }),
     ...CommonErrorResponses,
@@ -87,6 +94,8 @@ export const updateHelperSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
       })
     }),
     ...CommonErrorResponses,
@@ -122,7 +131,9 @@ export const getHelperUsersSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
-        created_at: Type.String({ format: 'date-time' })
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
       })
       )
     }),
