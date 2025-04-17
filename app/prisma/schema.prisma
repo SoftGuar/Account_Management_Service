@@ -14,8 +14,8 @@ model Decider {
   email      String  @unique
   password   String
   phone      String?
-  created_at  DateTime      @default(now())
-  updated_at  DateTime      @default(now())
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @default(now())
 
 }
 
@@ -26,6 +26,9 @@ model SuperAdmin {
   email      String  @unique
   password   String
   phone      String?
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @default(now())
+
   admins     Admin[]
 }
 
@@ -38,8 +41,8 @@ model Admin {
   phone      String?
   add_by     Int
   privilege  Int
-  created_at  DateTime      @default(now())
-  updated_at  DateTime      @default(now())
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @default(now())
 
   superAdmin SuperAdmin @relation(fields: [add_by], references: [id], onDelete: Cascade)
 }
@@ -51,8 +54,9 @@ model Maintainer {
   email        String         @unique
   password     String
   phone        String?
-  created_at  DateTime      @default(now())
-  updated_at  DateTime      @default(now())
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @default(now())
+
   DispoIssue   DispoIssue[]
   Intervention Intervention[]
 }
@@ -64,13 +68,15 @@ model User {
   last_name    String
   password     String
   phone        String?
-  created_at  DateTime      @default(now())
-  updated_at  DateTime      @default(now())
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @default(now())
   Dispositive  Dispositive[]
   Notification Notification[]
   Quotation    Quotation[]
   Transaction  Transaction[]
   helpers      Helper[]       @relation("UserHelpers")
+  helper_recommendations HelperRecommendation[] @relation("UserHelperRecommendations")
+
 }
 
 model Helper {
@@ -81,9 +87,23 @@ model Helper {
   password   String
   phone      String?
   users      User[]  @relation("UserHelpers")
-  created_at  DateTime      @default(now())
-  updated_at  DateTime      @default(now())
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @default(now())
 
+}
+
+model HelperRecommendation {
+  id          Int      @id @default(autoincrement())
+  first_name  String
+  last_name   String
+  email       String
+  phone       String?
+  status      String   @default("pending") // "pending", "approved", "rejected"
+  user_id     Int      // User who made the recommendation
+  notes       String?  // Optional notes from the recommender
+  user        User     @relation("UserHelperRecommendations", fields: [user_id], references: [id])
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
 }
 
 model Commercial {
@@ -94,9 +114,9 @@ model Commercial {
   password    String
   phone       String?
   Transaction Transaction[]
-  created_at  DateTime      @default(now())
-  updated_at  DateTime      @default(now())
-
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @default(now())
+ 
 }
 
 model Dispositive {
@@ -211,12 +231,10 @@ model Notification {
   id         Int       @id @default(autoincrement())
   user_id    Int
   type       String?
-  channel    String?
   title      String
   message    String
   metadata   Json?
   is_read    Boolean   @default(false)
-  status     String    @default("pending")
   created_at DateTime  @default(now())
   sent_at    DateTime?
   read_at    DateTime?
