@@ -8,6 +8,7 @@ export interface CreateUserInput {
   email: string;
   password: string;
   phone?: string;
+  MAC :string;
 }
 
 export interface UpdateUserInput {
@@ -15,6 +16,7 @@ export interface UpdateUserInput {
   last_name?: string;
   email?: string;
   password?: string;
+  MAC : string ;
   phone?: string;
 }
 
@@ -24,6 +26,7 @@ export interface UserOutput {
   last_name: string;
   email: string;
   phone?: string | null; // Accepter null ou undefined
+  MAC:string;
   created_at :Date;
   updated_at :Date;
 
@@ -48,6 +51,7 @@ export const UserModel = {
         last_name: true,
         email: true,
         phone: true,
+        MAC:true,
         created_at :true,
         updated_at:true
 
@@ -65,6 +69,7 @@ export const UserModel = {
         last_name: true,
         email: true,
         phone: true,
+        MAC:true,
         created_at :true,
         updated_at:true
       },
@@ -80,6 +85,7 @@ export const UserModel = {
         last_name: true,
         email: true,
         phone: true,
+        MAC:true,
         created_at :true,
         updated_at:true,
         helpers: {
@@ -106,6 +112,7 @@ export const UserModel = {
         last_name: true,
         email: true,
         phone: true,
+        MAC : true,
         created_at :true,
         updated_at:true,
         helpers: {
@@ -133,6 +140,7 @@ export const UserModel = {
         last_name: true,
         email: true,
         phone: true,
+        MAC : true,
         created_at :true,
         updated_at:true,
       },
@@ -159,6 +167,7 @@ export const UserModel = {
         first_name: true,
         last_name: true,
         email: true,
+        MAC : true,
         phone: true,
         created_at :true,
         updated_at:true,
@@ -192,6 +201,7 @@ export const UserModel = {
         last_name: true,
         email: true,
         phone: true,
+        MAC : true,
         created_at :true,
         updated_at:true,
         helpers: {

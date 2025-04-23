@@ -21,6 +21,7 @@ const UserType = Type.Object({
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
   phone: Type.Optional(Type.String()),
+  MAC:Type.String(),
   created_at: Type.String({ format: 'date-time' }),
   updated_at: Type.String({ format: 'date-time' })
 
@@ -32,6 +33,7 @@ const UserWithHelpersType = Type.Object({
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
   phone: Type.Optional(Type.String()),
+  MAC:Type.String(),
   created_at: Type.String({ format: 'date-time' }),
   updated_at: Type.String({ format: 'date-time' }),
 helpers: Type.Optional(Type.Array(HelperType))
@@ -44,6 +46,7 @@ export const createUserSchema = {
     last_name: Type.String(),
     email: Type.String({ format: 'email' }),
     password: Type.String(),
+    MAC:Type.String(),
     phone: Type.Optional(Type.String()),
 
   }),
@@ -109,6 +112,7 @@ export const updateUserSchema = {
       email: Type.String({ format: 'email' }),
       password: Type.String(),
       phone: Type.Optional(Type.String()),
+      MAC:Type.String(),
     })
   ),
   response: {
