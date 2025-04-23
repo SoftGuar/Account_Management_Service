@@ -14,8 +14,8 @@ model Decider {
   email      String  @unique
   password   String
   phone      String?
-  created_at         DateTime             @default(now())
-  updated_at         DateTime             @default(now())
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now())
 
 }
 
@@ -26,9 +26,8 @@ model SuperAdmin {
   email      String  @unique
   password   String
   phone      String?
-  created_at         DateTime             @default(now())
-  updated_at         DateTime             @default(now())
-
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now())
   admins     Admin[]
 }
 
@@ -41,8 +40,8 @@ model Admin {
   phone      String?
   add_by     Int
   privilege  Int
-  created_at         DateTime             @default(now())
-  updated_at         DateTime             @default(now())
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now())
 
   superAdmin SuperAdmin @relation(fields: [add_by], references: [id], onDelete: Cascade)
 }
@@ -54,8 +53,8 @@ model Maintainer {
   email        String         @unique
   password     String
   phone        String?
-  created_at         DateTime             @default(now())
-  updated_at         DateTime             @default(now())
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now())
 
   DispoIssue   DispoIssue[]
   Intervention Intervention[]
@@ -68,6 +67,7 @@ model User {
   last_name    String
   password     String
   phone        String?
+  MAC                String
   created_at         DateTime             @default(now())
   updated_at         DateTime             @default(now())
   Dispositive  Dispositive[]
@@ -87,8 +87,8 @@ model Helper {
   password   String
   phone      String?
   users      User[]  @relation("UserHelpers")
-  created_at         DateTime             @default(now())
-  updated_at         DateTime             @default(now())
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now())
 
 }
 
@@ -102,8 +102,8 @@ model HelperRecommendation {
   user_id     Int      // User who made the recommendation
   notes       String?  // Optional notes from the recommender
   user        User     @relation("UserHelperRecommendations", fields: [user_id], references: [id])
-  created_at  DateTime @default(now())
-  updated_at  DateTime @default(now())
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now())
 }
 
 model Commercial {
@@ -114,8 +114,8 @@ model Commercial {
   password    String
   phone       String?
   Transaction Transaction[]
-  created_at         DateTime             @default(now())
-  updated_at         DateTime             @default(now())
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now())
  
 }
 
@@ -129,8 +129,8 @@ model Dispositive {
   state              String
   user_id            Int?
   product_id         Int
-  created_at         DateTime             @default(now())
-  updated_at         DateTime
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now())
   DispoIssue         DispoIssue[]
   Product            Product              @relation(fields: [product_id], references: [id], onDelete: Cascade)
   User               User?                @relation(fields: [user_id], references: [id], onDelete: Cascade)
@@ -143,8 +143,8 @@ model Product {
   name             String
   description      String?
   price            Float
-  created_at       DateTime           @default(now())
-  updated_at       DateTime
+  created_at   DateTime  @default(now())
+  updated_at   DateTime   @default(now())
   Dispositive      Dispositive[]
   ProductQuotation ProductQuotation[]
 }
@@ -197,7 +197,8 @@ model DispoIssue {
   id            Int         @id @default(autoincrement())
   dispositiveId Int
   description   String
-  date          DateTime    @default(now())
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now())
   status        String      @default("pending")
   maintainerId  Int?
   Dispositive   Dispositive @relation(fields: [dispositiveId], references: [id])
@@ -216,6 +217,9 @@ model Intervention {
   Dispositive        Dispositive         @relation(fields: [idDispositive], references: [id])
   Maintainer         Maintainer          @relation(fields: [idMaintainer], references: [id])
   InterventionReport InterventionReport?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now())
+
 }
 
 model InterventionReport {
@@ -223,7 +227,8 @@ model InterventionReport {
   interventionId Int          @unique
   title          String
   description    String
-  created_at     DateTime     @default(now())
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now())
   Intervention   Intervention @relation(fields: [interventionId], references: [id], onDelete: Cascade)
 }
 
