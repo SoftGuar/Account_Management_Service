@@ -42,6 +42,19 @@ export const HelperService = {
       throw new AccountFetchError('Helper', id, { originalError: error });
     }
   },
+    getHelperByEmail: async (email: string) => {
+      try {
+        const helper = await HelperModel.findByEmail(email);
+        if (!helper) {
+          throw new AccountNotFoundError('Helper', email);
+        }
+        return helper;
+      } catch (error) {
+        if (error instanceof AccountNotFoundError) throw error;
+        throw new AccountFetchError('Helper', email, { originalError: error });
+      }
+    },
+  
 
   getAllHelpers: async () => {
     try {
@@ -82,4 +95,13 @@ export const HelperService = {
       throw new AccountDeletionError('Helper', id, { originalError: error });
     }
   },
+  getHelperUsers: async (helperId: number) => {
+      try {
+        const result = await HelperModel.getHelperUsers(helperId);
+        return result?.users || [];
+      } catch (error) {
+        throw new AccountFetchError('Helper Users', helperId, { originalError: error });
+      }
+    },
+  
 };

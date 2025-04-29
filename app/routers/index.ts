@@ -5,8 +5,10 @@ import exampleRoutes from './example.routes';
 import maintainerRoutes from './maintainer/maintainer.routes';
 import userRoutes from './user/user.routes';
 import helperRoutes from './helper/helper.routes';
+import helperRecommendationRoutes from './helperRecommendation/helperRecommendation.routes'
 
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
+import assistanceRoutes from './assistance/assistance.routes';
 
 const registerRoutes = (fastify: FastifyInstance) => {
   // Register example routes with a prefix
@@ -19,7 +21,9 @@ const registerRoutes = (fastify: FastifyInstance) => {
   fastify.register(deciderRoutes, { prefix: '/decider' });
   fastify.register(maintainerRoutes, { prefix: '/maintainer' });
   fastify.register(helperRoutes, { prefix: '/helpers' });
+  fastify.register(assistanceRoutes, { prefix: '/assistances' });
 
+  fastify.register(helperRecommendationRoutes, { prefix: '/helperRecommendations' });
 
 
 

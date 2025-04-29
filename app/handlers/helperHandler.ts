@@ -68,3 +68,22 @@ export const deleteHelper = async (
     message: 'Helper deleted successfully'
   });
 };
+export const getHelperUsers = async (
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply
+) => {
+  try {
+    const { id } = request.params;
+    const helpers = await HelperService.getHelperUsers(Number(id));
+    
+    return reply.code(200).send({
+      success: true,
+      data: helpers
+    });
+  } catch (error) {
+    return reply.code(500).send({
+      success: false,
+      message: 'An unexpected error occurred'
+    });
+  }
+};
