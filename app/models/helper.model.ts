@@ -93,6 +93,8 @@ export const HelperModel = {
             email: true,
             phone: true,
             created_at:true,
+            updated_at:true,
+            MAC:true,
           },
         },
       },
