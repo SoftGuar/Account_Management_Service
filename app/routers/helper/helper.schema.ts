@@ -132,8 +132,8 @@ export const getHelperUsersSchema = {
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
         created_at: Type.String({ format: 'date-time' }),
-        updated_at: Type.String({ format: 'date-time' })
-
+        updated_at: Type.String({ format: 'date-time' }),
+        MAC: Type.String()
       })
       )
     }),
