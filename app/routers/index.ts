@@ -23,7 +23,7 @@ const registerRoutes = (fastify: FastifyInstance) => {
   fastify.register(maintainerRoutes, { prefix: '/maintainer' });
   fastify.register(helperRoutes, { prefix: '/helpers' });
   fastify.register(assistanceRoutes, { prefix: '/assistances' });
-  fastify.register(superAdminRoutes, { prefix: '/superAdmins' });
+  fastify.register(superAdminRoutes, { prefix: '/superadmins' });
 
   fastify.register(helperRecommendationRoutes, { prefix: '/helperRecommendations' });
 
