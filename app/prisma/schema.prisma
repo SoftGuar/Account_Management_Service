@@ -307,7 +307,7 @@ model POI {
   name          String
   description   String
   POICategory   POICategory @relation(fields: [poiCategoryId], references: [id])
-  Zone          Zone[]
+  Zone          Zone[]      @relation("POIToZone")
 }
 
 model POICategory {
@@ -322,14 +322,14 @@ model Point {
   y              Float
   CircularLimits CircularLimits[]
   PolygonLimits  PolygonLimits[]
-  PointsLimits   PointsLimits[]
+  PointsLimits   PointsLimits[]   @relation("PointToPointsLimits")
 }
 
 model PointsLimits {
   id        Int     @id @default(autoincrement())
   limits_id Int     @unique
   Zone      Zone    @relation(fields: [limits_id], references: [id])
-  Point     Point[]
+  Point     Point[] @relation("PointToPointsLimits")
 }
 
 model PolygonLimits {
@@ -355,7 +355,7 @@ model Zone {
   PointsLimits   PointsLimits?
   PolygonLimits  PolygonLimits?
   Environment    Environment     @relation(fields: [environmentId], references: [id])
-  POI            POI[]
+  POI            POI[]           @relation("POIToZone")
 }
 
 enum InterventionStatus {
