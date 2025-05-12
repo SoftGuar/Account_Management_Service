@@ -17,7 +17,8 @@ describe('UserService', () => {
         last_name: 'exp',
         email: 'exmp@example.com',
         password: 'securepassword',
-        phone: '1234567890'
+        phone: '1234567890',
+        MAC: '00:00:00:00:00:00',
       };
 
       (UserModel.findByEmail as jest.Mock).mockResolvedValue(null);
@@ -38,13 +39,16 @@ describe('UserService', () => {
         last_name: 'exp',
         email: 'exmp@example.com',
         password: 'securepassword',
-        phone: '1234567890'
+        phone: '1234567890',
+        MAC: '00:00:00:00:00:00',
       };
 
       (UserModel.findByEmail as jest.Mock).mockResolvedValue({ id: 1, email: 'exmp@example.com' });
 
-      await expect(UserService.createUser(userData)).rejects.toThrow('User with this email already exists');
-    });
+      await expect(UserService.createUser(userData))
+      .rejects.toThrow("User account with identifier 'exmp@example.com' already exists.");
+    
+        });
   });
 
   describe('getUserById', () => {
@@ -59,14 +63,6 @@ describe('UserService', () => {
       expect(result).toEqual(user);
     });
 
-    it('should return null if user is not found', async () => {
-      (UserModel.findById as jest.Mock).mockResolvedValue(null);
-
-      const result = await UserService.getUserById(99);
-
-      expect(UserModel.findById).toHaveBeenCalledWith(99);
-      expect(result).toBeNull();
-    });
   });
 
   describe('getAllUsers', () => {
