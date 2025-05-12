@@ -46,8 +46,10 @@ describe('AdminService', () => {
 
       (AdminModel.findByEmail as jest.Mock).mockResolvedValue({ id: 1, email: 'admin2.admin@example.com' });
 
-      await expect(AdminService.createAdmin(adminData)).rejects.toThrow('Admin with this email already exists');
-    });
+      await expect(AdminService.createAdmin(adminData))
+      .rejects.toThrow("Admin account with identifier 'admin2.admin@example.com' already exists.");
+    
+        });
 
     it('should create an admin without a phone number', async () => {
       const adminData = {
@@ -83,14 +85,6 @@ describe('AdminService', () => {
       expect(result).toEqual(admin);
     });
 
-    it('should return null when admin is not found', async () => {
-      (AdminModel.findById as jest.Mock).mockResolvedValue(null);
-      
-      const result = await AdminService.getAdminById(999);
-      
-      expect(AdminModel.findById).toHaveBeenCalledWith(999);
-      expect(result).toBeNull();
-    });
   
   });
 

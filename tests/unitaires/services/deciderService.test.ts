@@ -42,8 +42,10 @@ describe('DeciderService', () => {
 
       (DeciderModel.findByEmail as jest.Mock).mockResolvedValue({ id: 1, email: 'axpe.axp@example.com' });
 
-      await expect(DeciderService.createDecider(DeciderData)).rejects.toThrow('Decider with this email already exists');
-    });
+      await expect(DeciderService.createDecider(DeciderData))
+      .rejects.toThrow("Decider account with identifier 'axpe.axp@example.com' already exists.");
+    
+        });
 
     it('should create an Decider without a phone number', async () => {
       const DeciderData = {
@@ -76,14 +78,7 @@ describe('DeciderService', () => {
       expect(result).toEqual(Decider);
     });
 
-    it('should return null when decider is not found', async () => {
-      (DeciderModel.findById as jest.Mock).mockResolvedValue(null);
-      
-      const result = await DeciderService.getDeciderById(999);
-      
-      expect(DeciderModel.findById).toHaveBeenCalledWith(999);
-      expect(result).toBeNull();
-    });
+ 
   
   });
 

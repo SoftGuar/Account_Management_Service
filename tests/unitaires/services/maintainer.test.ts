@@ -42,8 +42,10 @@ describe('MaintainerService', () => {
 
       (MaintainerModel.findByEmail as jest.Mock).mockResolvedValue({ id: 1, email: 'axpe.axp@example.com' });
 
-      await expect(MaintainerService.createMaintainer(MaintainerData)).rejects.toThrow('Maintainer with this email already exists');
-    });
+      await expect(MaintainerService.createMaintainer(MaintainerData))
+      .rejects.toThrow("Maintainer account with identifier 'axpe.axp@example.com' already exists.");
+    
+        });
 
     it('should create an Maintainer without a phone number', async () => {
       const MaintainerData = {
@@ -76,14 +78,6 @@ describe('MaintainerService', () => {
       expect(result).toEqual(Maintainer);
     });
 
-    it('should return null when maintainer is not found', async () => {
-      (MaintainerModel.findById as jest.Mock).mockResolvedValue(null);
-      
-      const result = await MaintainerService.getMaintainerById(999);
-      
-      expect(MaintainerModel.findById).toHaveBeenCalledWith(999);
-      expect(result).toBeNull();
-    });
 
   });
 

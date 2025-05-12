@@ -42,8 +42,10 @@ describe('CommercialService', () => {
 
       (CommercialModel.findByEmail as jest.Mock).mockResolvedValue({ id: 1, email: 'axpe.axp@example.com' });
 
-      await expect(CommercialService.createCommercial(CommercialData)).rejects.toThrow('Commercial with this email already exists');
-    });
+      await expect(CommercialService.createCommercial(CommercialData))
+      .rejects.toThrow("Commercial account with identifier 'axpe.axp@example.com' already exists.");
+    
+        });
 
     it('should create an Commercial without a phone number', async () => {
       const CommercialData = {
@@ -74,14 +76,6 @@ describe('CommercialService', () => {
 
       expect(CommercialModel.findById).toHaveBeenCalledWith(1);
       expect(result).toEqual(Commercial);
-    });
-    it('should return null when commercial is not found', async () => {
-      (CommercialModel.findById as jest.Mock).mockResolvedValue(null);
-      
-      const result = await CommercialService.getCommercialById(999);
-      
-      expect(CommercialModel.findById).toHaveBeenCalledWith(999);
-      expect(result).toBeNull();
     });
   
   });

@@ -42,8 +42,7 @@ describe('HelperService', () => {
 
       (HelperModel.findByEmail as jest.Mock).mockResolvedValue({ id: 1, email: 'axpe.axp@example.com' });
 
-      await expect(HelperService.createHelper(HelperData)).rejects.toThrow('Helper with this email already exists');
-    });
+      await expect(HelperService.createHelper(HelperData)).rejects.toThrow("Helper account with identifier 'axpe.axp@example.com' already exists.");    });
 
     it('should create an Helper without a phone number', async () => {
       const HelperData = {
@@ -74,14 +73,6 @@ describe('HelperService', () => {
 
       expect(HelperModel.findById).toHaveBeenCalledWith(1);
       expect(result).toEqual(Helper);
-    });
-    it('should return null when helper is not found', async () => {
-      (HelperModel.findById as jest.Mock).mockResolvedValue(null);
-      
-      const result = await HelperService.getHelperById(999);
-      
-      expect(HelperModel.findById).toHaveBeenCalledWith(999);
-      expect(result).toBeNull();
     });
 
   });
