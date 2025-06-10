@@ -63,7 +63,7 @@ async function startServer() {
     const host = process.env.HOST || '0.0.0.0';
     await fastify.listen({ port, host });
     logger.info(`Server listening on ${host}:${port}`);
-    //setInterval(writeReport, 10000);
+    setInterval(writeReport, 2 * 60 * 60 * 1000);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
