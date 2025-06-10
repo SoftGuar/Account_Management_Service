@@ -1,0 +1,13 @@
+services:
+  fluent-bit-accountManagementService:
+    image: fluent/fluent-bit:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "2020:2020"
+    volumes:
+      - ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+      - ./parsers.conf:/fluent-bit/etc/parsers.conf
+      - ../app/logs:/app/logs
+    restart: unless-stopped
