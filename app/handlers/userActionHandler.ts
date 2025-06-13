@@ -22,3 +22,23 @@ export const addUserAction = async (
     });
   }
 };
+
+export const getUserActionsByUserId = async (
+  request: FastifyRequest<{ Params: { userId: string } }>,
+  reply: FastifyReply
+) => {
+  try {
+    const userId = Number(request.params.userId);
+    const actions = await UserActionService.getActionsByUserId(userId);
+    return reply.code(200).send({ success: true, data: actions });
+  } catch (err: any) {
+    return reply.code(500).send({
+      success: false,
+      error: {
+        message: err.message || 'Failed to fetch user actions',
+        code: 'USER_ACTIONS_FETCH_ERROR',
+        timestamp: new Date().toISOString(),
+      }
+    });
+  }
+};

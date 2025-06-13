@@ -10,6 +10,8 @@ export const createMaintainer = async (
   const maintainerData = request.body;
   const newMaintainer = await MaintainerService.createMaintainer(maintainerData);
 
+  console.log('New Maintainer Created:', newMaintainer);
+
   return reply.code(201).send({
     success: true,
     data: newMaintainer
