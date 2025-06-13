@@ -26,3 +26,29 @@ export const addUserActionSchema = {
     }),
   },
 };
+
+export const getUserActionsSchema = {
+  tags: ['UserAction'],
+  params: Type.Object({ userId: Type.Number() }),
+  response: {
+    200: Type.Object({
+      success: Type.Literal(true),
+      data: Type.Array(
+        Type.Object({
+          id: Type.Number(),
+          user_id: Type.Number(),
+          action: Type.String(),
+          createdAt: Type.String({ format: 'date-time' })
+        })
+      )
+    }),
+    500: Type.Object({
+      success: Type.Literal(false),
+      error: Type.Object({
+        message: Type.String(),
+        code: Type.String(),
+        timestamp: Type.String({ format: 'date-time' })
+      })
+    })
+  }
+};
