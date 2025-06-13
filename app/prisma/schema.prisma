@@ -358,6 +358,15 @@ model Zone {
   POI            POI[]           @relation("POIToZone")
 }
 
+model UserAction {
+  id        Int      @id @default(autoincrement())
+  user_id   Int
+  action    String
+  createdAt DateTime @default(now())
+
+  @@index([user_id])
+}
+
 enum InterventionStatus {
   done
   inProgress

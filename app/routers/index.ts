@@ -7,6 +7,7 @@ import userRoutes from './user/user.routes';
 import helperRoutes from './helper/helper.routes';
 import helperRecommendationRoutes from './helperRecommendation/helperRecommendation.routes'
 import superAdminRoutes from './superAdmin/superAdmin.routes';
+import userActionRoutes from './userAction/userAction.routes';
 
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import assistanceRoutes from './assistance/assistance.routes';
@@ -24,7 +25,7 @@ const registerRoutes = (fastify: FastifyInstance) => {
   fastify.register(helperRoutes, { prefix: '/helpers' });
   fastify.register(assistanceRoutes, { prefix: '/assistances' });
   fastify.register(superAdminRoutes, { prefix: '/superadmins' });
-
+  fastify.register(userActionRoutes, { prefix: '/api' });
   fastify.register(helperRecommendationRoutes, { prefix: '/helperRecommendations' });
 
 
