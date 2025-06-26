@@ -16,7 +16,7 @@ This is a structured Fastify application.
  ├── .gitignore  
  ├── docker-compose.yml  
  ├── Dockerfile  
- ├── example-env  
+ ├── .env.example  
  ├── package.json  
  └── readme.md  
 
