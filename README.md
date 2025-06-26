@@ -21,7 +21,9 @@ This is a structured Fastify application.
  └── readme.md  
 
 # Set up environment variables:
-Create a .env file in the root directory  and copy the content of .env.example
+Create a .env file in the root directory and copy the content from .env.example:
+
+cp .env.example .env
 
 # Running the App
 
